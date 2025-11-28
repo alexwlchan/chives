@@ -19,7 +19,7 @@ from .timestamps import (
     reformat_date,
 )
 
-__version__ = "1"
+__version__ = "2"
 
 __all__ = [
     "date_matches_any_format",
