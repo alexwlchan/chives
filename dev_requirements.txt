@@ -58,6 +58,8 @@ pygments==2.19.2
     #   pytest
     #   readme-renderer
     #   rich
+pymediainfo==7.0.1
+    # via alexwlchan-chives
 pyproject-hooks==1.2.0
     # via build
 pytest==9.0.1

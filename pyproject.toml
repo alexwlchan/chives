@@ -23,6 +23,9 @@ dependencies = []
 dynamic = ["version"]
 license = "MIT"
 
+[project.optional-dependencies]
+media = ["pymediainfo"]
+
 [project.urls]
 "Homepage" = "https://github.com/alexwlchan/chives"
 "Changelog" = "https://github.com/alexwlchan/chives/blob/main/CHANGELOG.md"

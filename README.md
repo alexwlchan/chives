@@ -19,6 +19,7 @@ This package has some functions I share across multiple archives/sites.
 I've written blog posts about some of the code in this repo:
 
 *   [Cleaning up messy dates in JSON](https://alexwlchan.net/2025/messy-dates-in-json/)
+*   [Detecting AV1-encoded videos with Python](https://alexwlchan.net/2025/detecting-av1-videos/)
 
 ## Versioning
 
