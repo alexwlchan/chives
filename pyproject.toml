@@ -1,0 +1,57 @@
+[build-system]
+requires = [
+    "setuptools >= 65",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chives"
+description = "Utility functions for working with my local media archives"
+readme = "README.md"
+authors = [
+  {name = "Alex Chan", email = "alex@alexwlchan.net"},
+]
+maintainers = [
+  {name = "Alex Chan", email="alex@alexwlchan.net"},
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python :: 3.13",
+]
+requires-python = ">=3.13"
+dependencies = []
+dynamic = ["version"]
+license = "MIT"
+
+[project.urls]
+"Homepage" = "https://github.com/alexwlchan/chives"
+"Changelog" = "https://github.com/alexwlchan/chives/blob/main/CHANGELOG.md"
+
+[tool.setuptools.dynamic]
+version = {attr = "chives.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+nitrate = ["py.typed"]
+
+[tool.coverage.run]
+branch = true
+source = ["chives", "tests",]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 100
+
+[tool.pytest.ini_options]
+filterwarnings = ["error"]
+
+[tool.mypy]
+mypy_path = "src"
+strict = true
+
+[tool.ruff.lint]
+select = ["D"]
+ignore = ["D200", "D203", "D204", "D205", "D212"]
