@@ -15,7 +15,7 @@ maintainers = [
   {name = "Alex Chan", email="alex@alexwlchan.net"},
 ]
 classifiers = [
-  "Development Status :: 5 - Production/Stable",
+  "Development Status :: 4 - Beta",
   "Programming Language :: Python :: 3.13",
 ]
 requires-python = ">=3.13"
@@ -54,4 +54,4 @@ strict = true
 
 [tool.ruff.lint]
 select = ["D"]
-ignore = ["D200", "D203", "D204", "D205", "D212"]
+ignore = ["D200", "D203", "D204", "D205", "D212", "D401"]
