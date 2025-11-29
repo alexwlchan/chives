@@ -12,10 +12,14 @@ coverage==7.12.0
     # via pytest-cov
 docutils==0.22.3
     # via readme-renderer
+hyperlink==21.0.0
+    # via alexwlchan-chives
 id==1.5.0
     # via twine
 idna==3.11
-    # via requests
+    # via
+    #   hyperlink
+    #   requests
 iniconfig==2.3.0
     # via pytest
 jaraco-classes==3.4.0

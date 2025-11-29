@@ -25,6 +25,7 @@ license = "MIT"
 
 [project.optional-dependencies]
 media = ["pymediainfo"]
+urls = ["hyperlink"]
 
 [project.urls]
 "Homepage" = "https://github.com/alexwlchan/chives"

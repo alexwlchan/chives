@@ -1,6 +1,6 @@
 """Tests for `chives.media`."""
 
-from chives import is_av1_video
+from chives.media import is_av1_video
 
 
 def test_is_av1_video() -> None:

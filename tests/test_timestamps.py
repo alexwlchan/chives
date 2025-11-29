@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from chives import date_matches_any_format, find_all_dates, reformat_date
+from chives.timestamps import date_matches_any_format, find_all_dates, reformat_date
 
 
 def test_find_all_dates() -> None:
