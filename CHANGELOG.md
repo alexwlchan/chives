@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v4 - 2025-11-29
+
+Rename `chives.timestamps` to `chives.dates`.
+
 ## v3 - 2025-11-29
 
 Add the `clean_youtube_url()` function and `urls` extra.
