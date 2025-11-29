@@ -30,8 +30,6 @@ I'm making this public because it's convenient for me, and you might find useful
 
 ## Usage
 
-All the functions are available in the `chives` namespace.
-
 See the docstrings on individual functions for usage descriptions.
 
 ## Installation

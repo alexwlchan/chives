@@ -1,4 +1,4 @@
--e file:.[media]
+-e file:.[media,urls]
 
 build
 mypy
