@@ -55,6 +55,7 @@ def test_date_matches_any_format() -> None:
         ("2025-11-12T15:34:39.570Z", "%Y-%m-%dT%H:%M:%S.%fZ", "2025-11-12T15:34:39Z"),
         ("2025-03-12 09:57:03", "%Y-%m-%d %H:%M:%S", "2025-03-12T09:57:03Z"),
         ("2016-02-25 05:28:35 GMT", "%Y-%m-%d %H:%M:%S %Z", "2016-02-25T05:28:35Z"),
+        ("2011-12-06T10:45:15-08:00", "%Y-%m-%dT%H:%M:%S%z", "2011-12-06T18:45:15Z"),
     ],
 )
 def test_reformat_date(s: str, orig_fmt: str, formatted_date: str) -> None:
