@@ -70,4 +70,6 @@ def reformat_date(s: str, /, orig_fmt: str) -> str:
     d = d.replace(microsecond=0)
     if d.tzinfo is None:
         d = d.replace(tzinfo=timezone.utc)
+    else:
+        d = d.astimezone(tz=timezone.utc)
     return d.strftime("%Y-%m-%dT%H:%M:%S%z").replace("+0000", "Z")

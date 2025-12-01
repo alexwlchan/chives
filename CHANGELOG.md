@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v5 - 2025-12-01
+
+When calling `reformat_date()`, ensure all dates are converted to UTC.
+
 ## v4 - 2025-11-29
 
 Rename `chives.timestamps` to `chives.dates`.
