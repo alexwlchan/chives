@@ -11,4 +11,4 @@ I share across multiple sites.
 
 """
 
-__version__ = "6"
+__version__ = "7"
