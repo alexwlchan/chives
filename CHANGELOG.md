@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v6 - 2025-12-03
+
+Add the `parse_mastodon_post_url()` function.
+
 ## v5 - 2025-12-01
 
 When calling `reformat_date()`, ensure all dates are converted to UTC.
