@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v7 - 2025-12-03
+
+Add the `parse_tumblr_post_url()` function.
+
 ## v6 - 2025-12-03
 
 Add the `parse_mastodon_post_url()` function.

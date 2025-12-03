@@ -2,7 +2,11 @@
 
 import pytest
 
-from chives.urls import clean_youtube_url, parse_mastodon_post_url
+from chives.urls import (
+    clean_youtube_url,
+    parse_mastodon_post_url,
+    parse_tumblr_post_url,
+)
 
 
 @pytest.mark.parametrize(
@@ -66,3 +70,25 @@ def test_parse_mastodon_post_url_errors(url: str, error: str) -> None:
     """
     with pytest.raises(ValueError, match=error):
         parse_mastodon_post_url(url)
+
+
+@pytest.mark.parametrize(
+    "url, blog_identifier, post_id",
+    [
+        (
+            "https://www.tumblr.com/kynvillingur/792473255236796416/",
+            "kynvillingur",
+            "792473255236796416",
+        ),
+        (
+            "https://cut3panda.tumblr.com/post/94093772689/for-some-people-the-more-you-get-to-know-them",
+            "cut3panda",
+            "94093772689",
+        ),
+    ],
+)
+def test_parse_tumblr_post_url(url: str, blog_identifier: str, post_id: str) -> None:
+    """
+    Tumblr URLs are parsed correctly.
+    """
+    assert parse_tumblr_post_url(url) == (blog_identifier, post_id)

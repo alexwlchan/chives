@@ -6,6 +6,13 @@ from typing import TypedDict
 import hyperlink
 
 
+__all__ = [
+    "clean_youtube_url",
+    "parse_mastodon_post_url",
+    "parse_tumblr_post_url",
+]
+
+
 def clean_youtube_url(url: str) -> str:
     """
     Remove any query parameters from a YouTube URL that I don't
@@ -43,3 +50,20 @@ def parse_mastodon_post_url(url: str) -> tuple[str, str, str]:
         acct = u.path[0].replace("@", "")
 
     return server, acct, u.path[1]
+
+
+def parse_tumblr_post_url(url: str) -> tuple[str, str]:
+    """
+    Parse a Tumblr URL into its component parts.
+
+    Returns a tuple (blog_identifier, post ID).
+    """
+    u = hyperlink.parse(url)
+
+    if u.host == "www.tumblr.com":
+        return u.path[0], u.path[1]
+
+    if u.host.endswith(".tumblr.com") and len(u.path) >= 3 and u.path[0] == "post":
+        return u.host.replace(".tumblr.com", ""), u.path[1]
+
+    raise ValueError("Cannot parse Tumblr URL!")  # pragma: no cover
