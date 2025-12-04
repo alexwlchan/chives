@@ -1,9 +1,11 @@
 """Tests for `chives.urls`."""
 
 import pytest
+from vcr.cassette import Cassette
 
 from chives.urls import (
     clean_youtube_url,
+    is_mastodon_host,
     parse_mastodon_post_url,
     parse_tumblr_post_url,
 )
@@ -92,3 +94,37 @@ def test_parse_tumblr_post_url(url: str, blog_identifier: str, post_id: str) -> 
     Tumblr URLs are parsed correctly.
     """
     assert parse_tumblr_post_url(url) == (blog_identifier, post_id)
+
+
+class TestIsMastodonHost:
+    """
+    Tests for `is_mastodon_host`.
+    """
+
+    @pytest.mark.parametrize(
+        "host", ["mastodon.social", "hachyderm.io", "social.jvns.ca"]
+    )
+    def test_mastodon_servers(self, host: str, vcr_cassette: Cassette) -> None:
+        """
+        It correctly identifies real Mastodon servers.
+        """
+        assert is_mastodon_host(host)
+
+    @pytest.mark.parametrize(
+        "host",
+        [
+            # These are regular Internet websites which don't expose
+            # the /.well-known/nodeinfo endpoint
+            "example.com",
+            "alexwlchan.net",
+            #
+            # PeerTube exposes /.well-known/nodeinfo, but it's running
+            # different software.
+            "peertube.tv",
+        ],
+    )
+    def test_non_mastodon_servers(self, host: str, vcr_cassette: Cassette) -> None:
+        """
+        Other websites are not Mastodon servers.
+        """
+        assert not is_mastodon_host(host)

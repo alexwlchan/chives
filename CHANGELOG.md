@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v8 - 2025-12-04
+
+Add the `is_mastodon_host()` function.
+
 ## v7 - 2025-12-03
 
 Add the `parse_tumblr_post_url()` function.
