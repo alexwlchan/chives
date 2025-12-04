@@ -1,0 +1,128 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Host:
+      - social.jvns.ca
+      User-Agent:
+      - python-httpx/0.28.1
+    method: GET
+    uri: https://social.jvns.ca/.well-known/nodeinfo
+  response:
+    body:
+      string: '{"links":[{"rel":"http://nodeinfo.diaspora.software/ns/schema/2.0","href":"https://social.jvns.ca/nodeinfo/2.0"}]}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 04 Dec 2025 12:14:49 GMT
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      cache-control:
+      - max-age=259200, public
+      content-length:
+      - '114'
+      content-security-policy:
+      - 'base-uri ''none''; default-src ''none''; frame-ancestors ''none''; font-src
+        ''self'' https://social.jvns.ca; img-src ''self'' data: blob: https://social.jvns.ca
+        https://cdn.masto.host; media-src ''self'' data: https://social.jvns.ca https://cdn.masto.host;
+        manifest-src ''self'' https://social.jvns.ca; form-action ''self''; child-src
+        ''self'' blob: https://social.jvns.ca; worker-src ''self'' blob: https://social.jvns.ca;
+        connect-src ''self'' data: blob: https://social.jvns.ca https://cdn.masto.host
+        wss://social.jvns.ca; script-src ''self'' https://social.jvns.ca ''wasm-unsafe-eval'';
+        frame-src ''self'' https:; style-src ''self'' https://social.jvns.ca ''nonce-cYXJpX/juTVw0Sc+MAA7BQ=='''
+      etag:
+      - W/"41981c7ccfa1674c1535b6eea835d7e5"
+      referrer-policy:
+      - same-origin
+      server:
+      - Mastodon
+      vary:
+      - Origin
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-request-id:
+      - d4888141-9cb3-4305-b5dd-a8b0842a2d05
+      x-runtime:
+      - '0.003398'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Host:
+      - social.jvns.ca
+      User-Agent:
+      - python-httpx/0.28.1
+    method: GET
+    uri: https://social.jvns.ca/nodeinfo/2.0
+  response:
+    body:
+      string: '{"version":"2.0","software":{"name":"mastodon","version":"4.5.2"},"protocols":["activitypub"],"services":{"outbound":[],"inbound":[]},"usage":{"users":{"total":4,"activeMonth":4,"activeHalfyear":4},"localPosts":7409},"openRegistrations":false,"metadata":{"nodeName":"Mastodon","nodeDescription":""}}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 04 Dec 2025 12:14:49 GMT
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      cache-control:
+      - max-age=1800, public
+      content-length:
+      - '299'
+      content-security-policy:
+      - 'base-uri ''none''; default-src ''none''; frame-ancestors ''none''; font-src
+        ''self'' https://social.jvns.ca; img-src ''self'' data: blob: https://social.jvns.ca
+        https://cdn.masto.host; media-src ''self'' data: https://social.jvns.ca https://cdn.masto.host;
+        manifest-src ''self'' https://social.jvns.ca; form-action ''self''; child-src
+        ''self'' blob: https://social.jvns.ca; worker-src ''self'' blob: https://social.jvns.ca;
+        connect-src ''self'' data: blob: https://social.jvns.ca https://cdn.masto.host
+        wss://social.jvns.ca; script-src ''self'' https://social.jvns.ca ''wasm-unsafe-eval'';
+        frame-src ''self'' https:; style-src ''self'' https://social.jvns.ca ''nonce-KudwCpfFUyr8bIzc9hLCuA=='''
+      etag:
+      - W/"def238b77fc5db88a115321ee60e49e7"
+      referrer-policy:
+      - same-origin
+      server:
+      - Mastodon
+      vary:
+      - Accept, Origin
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-request-id:
+      - 3ef92cee-53b7-41e1-b1f1-5b9b094c5616
+      x-runtime:
+      - '0.008559'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -1,0 +1,107 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Host:
+      - peertube.tv
+      User-Agent:
+      - python-httpx/0.28.1
+    method: GET
+    uri: https://peertube.tv/.well-known/nodeinfo
+  response:
+    body:
+      string: '{"links":[{"rel":"http://nodeinfo.diaspora.software/ns/schema/2.0","href":"https://peertube.tv/nodeinfo/2.0.json"}]}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '116'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 04 Dec 2025 12:17:46 GMT
+      Server:
+      - nginx/1.18.0 (Ubuntu)
+      access-control-allow-origin:
+      - '*'
+      cache-control:
+      - max-age=548
+      etag:
+      - W/"74-uYd/TxZEF87Urak29pxyd08PwVE"
+      tk:
+      - N
+      x-frame-options:
+      - DENY
+      x-powered-by:
+      - PeerTube
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Host:
+      - peertube.tv
+      User-Agent:
+      - python-httpx/0.28.1
+    method: GET
+    uri: https://peertube.tv/nodeinfo/2.0.json
+  response:
+    body:
+      string: '{"version":"2.0","software":{"name":"peertube","version":"5.2.0"},"protocols":["activitypub"],"services":{"inbound":[],"outbound":["atom1.0","rss2.0"]},"openRegistrations":false,"usage":{"users":{"total":609,"activeMonth":8,"activeHalfyear":35},"localPosts":18598,"localComments":93},"metadata":{"taxonomy":{"postsName":"Videos"},"nodeName":"PeerTube.TV","nodeDescription":"Videos
+        sharing & live streaming on free open source software PeerTube! No ads, no
+        tracking, no spam.","nodeConfig":{"search":{"remoteUri":{"users":true,"anonymous":false}},"plugin":{"registered":[{"npmName":"peertube-plugin-upload-instructions","name":"upload-instructions","version":"0.1.1","description":"Show
+        an instructions modal right before uploading","clientScripts":{"dist/common-client-plugin.js":{"script":"dist/common-client-plugin.js","scopes":["common"]}}},{"npmName":"peertube-plugin-custom-links","name":"custom-links","version":"0.0.10","description":"PeerTube
+        plugin that allows you to add custom links on the bottom of the menu","clientScripts":{"dist/common-client-plugin.js":{"script":"dist/common-client-plugin.js","scopes":["common"]}}},{"npmName":"peertube-plugin-glavliiit","name":"glavliiit","version":"0.0.10","description":"Enhanced
+        moderation tool for PeerTube","clientScripts":{}},{"npmName":"peertube-plugin-categories","name":"categories","version":"1.2.7","description":"Manage
+        video categories.","clientScripts":{"src/client/admin-plugin-settings.js":{"script":"src/client/admin-plugin-settings.js","scopes":["admin-plugin"]}}},{"npmName":"peertube-plugin-creative-commons","name":"creative-commons","version":"1.2.0","description":"Standardized
+        display of Creative Commons licenses. Uses short identifiers like CC BY-SA
+        4.0 instead of descriptive text.","clientScripts":{"client/video-watch-client-plugin.js":{"script":"client/video-watch-client-plugin.js","scopes":["video-watch"]}}},{"npmName":"peertube-plugin-social-sharing-rus","name":"social-sharing-rus","version":"0.11.0","description":"Share
+        a video or playlist URL on social media (Mastodon, WordPress, reddit, Twitter,
+        etc.)","clientScripts":{"dist/common-client-plugin.js":{"script":"dist/common-client-plugin.js","scopes":["common"]}}},{"npmName":"peertube-plugin-menu-items","name":"menu-items","version":"0.0.4","description":"PeerTube
+        plugin menu-items","clientScripts":{"dist/common-client-plugin.js":{"script":"dist/common-client-plugin.js","scopes":["common"]}}},{"npmName":"peertube-plugin-chapters","name":"chapters","version":"1.1.3","description":"PeerTube
+        chapter plugin","clientScripts":{"dist/client/video-watch-client-plugin.js":{"script":"dist/client/video-watch-client-plugin.js","scopes":["video-watch","embed"]},"dist/client/video-edit-client-plugin.js":{"script":"dist/client/video-edit-client-plugin.js","scopes":["video-edit"]}}},{"npmName":"peertube-plugin-simplelogo","name":"simplelogo","version":"0.0.5","description":"Plugin
+        that let you change logo and favicon on your PeerTube instance.","clientScripts":{"client/common-client-plugin.js":{"script":"client/common-client-plugin.js","scopes":["common"]}}},{"npmName":"peertube-plugin-video-annotation","name":"video-annotation","version":"0.0.7","description":"PeerTube
+        plugin video annotation","clientScripts":{"dist/embed-client-plugin.js":{"script":"dist/embed-client-plugin.js","scopes":["embed"]},"dist/video-edit-client-plugin.js":{"script":"dist/video-edit-client-plugin.js","scopes":["video-edit"]},"dist/video-watch-client-plugin.js":{"script":"dist/video-watch-client-plugin.js","scopes":["video-watch"]}}},{"npmName":"peertube-plugin-livechat","name":"livechat","version":"7.2.1","description":"PeerTube
+        plugin livechat: offers a way to embed a chat system into Peertube.","clientScripts":{"dist/client/videowatch-client-plugin.js":{"script":"dist/client/videowatch-client-plugin.js","scopes":["video-watch"]},"dist/client/common-client-plugin.js":{"script":"dist/client/common-client-plugin.js","scopes":["common"]},"dist/client/admin-plugin-client-plugin.js":{"script":"dist/client/admin-plugin-client-plugin.js","scopes":["admin-plugin"]}}}]},"theme":{"registered":[{"npmName":"peertube-theme-dark-evolution","name":"dark-evolution","version":"1.0.4","description":"Evolution
+        of the official PeerTube dark theme","css":["assets/style.css"],"clientScripts":{}},{"npmName":"peertube-theme-dark","name":"dark","version":"2.5.0","description":"PeerTube
+        dark theme","css":["assets/style.css"],"clientScripts":{}}],"default":"dark-evolution"},"email":{"enabled":true},"contactForm":{"enabled":true},"transcoding":{"hls":{"enabled":true},"webtorrent":{"enabled":true},"enabledResolutions":[144,240,360,480,720,1080]},"live":{"enabled":true,"transcoding":{"enabled":true,"enabledResolutions":[144,480,720,1080]}},"import":{"videos":{"http":{"enabled":true},"torrent":{"enabled":false}}},"autoBlacklist":{"videos":{"ofUsers":{"enabled":false}}},"avatar":{"file":{"size":{"max":4194304},"extensions":[".png",".jpeg",".jpg",".gif",".webp"]}},"video":{"image":{"extensions":[".png",".jpg",".jpeg",".webp"],"size":{"max":4194304}},"file":{"extensions":[".webm",".ogv",".ogg",".mp4",".mkv",".mov",".qt",".mqv",".m4v",".flv",".f4v",".wmv",".avi",".3gp",".3gpp",".3g2",".3gpp2",".nut",".mts",".m2ts",".mpv",".m2v",".m1v",".mpg",".mpe",".mpeg",".vob",".mxf",".mp3",".wma",".wav",".flac",".aac",".m4a",".ac3"]}},"videoCaption":{"file":{"size":{"max":20971520},"extensions":[".vtt",".srt"]}},"user":{"videoQuota":53687091200,"videoQuotaDaily":5368709120},"trending":{"videos":{"intervalDays":7}},"tracker":{"enabled":true}}}}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '5567'
+      Content-Type:
+      - application/json; charset=utf-8; profile="http://nodeinfo.diaspora.software/ns/schema/2.0#"
+      Date:
+      - Thu, 04 Dec 2025 12:17:47 GMT
+      ETag:
+      - W/"15bf-UHcLfIV97HliD7E2eKuWJsf3iEQ"
+      Server:
+      - nginx/1.18.0 (Ubuntu)
+      Tk:
+      - N
+      X-Frame-Options:
+      - DENY
+      cache-control:
+      - max-age=600
+      x-powered-by:
+      - PeerTube
+    status:
+      code: 200
+      message: OK
+version: 1
