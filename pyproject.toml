@@ -24,7 +24,7 @@ dynamic = ["version"]
 license = "MIT"
 
 [project.optional-dependencies]
-media = ["pymediainfo"]
+media = ["Pillow"]
 urls = ["httpx", "hyperlink"]
 
 [project.urls]

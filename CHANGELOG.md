@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v9 - 2025-12-05
+
+This adds three models to `chives.media`: `ImageEntity`, `VideoEntity`, and `ImageEntity`.
+These have all the information I need to show an image/video in a web page.
+
+It also includes functions `create_image_entity` and `create_video_entity` which construct instances of these models.
+
 ## v8 - 2025-12-04
 
 Add the `is_mastodon_host()` function.
