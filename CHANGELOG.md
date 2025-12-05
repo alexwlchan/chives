@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v10 - 2025-12-05
+
+Add a new `is_url_safe()` function for checking if a path can be safely used in a URL.
+
 ## v9 - 2025-12-05
 
 This adds three models to `chives.media`: `ImageEntity`, `VideoEntity`, and `ImageEntity`.

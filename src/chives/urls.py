@@ -1,5 +1,6 @@
 """Code for manipulating and tidying URLs."""
 
+from pathlib import Path
 import re
 from typing import TypedDict
 
@@ -9,6 +10,8 @@ import hyperlink
 
 __all__ = [
     "clean_youtube_url",
+    "is_mastodon_host",
+    "is_url_safe",
     "parse_mastodon_post_url",
     "parse_tumblr_post_url",
 ]
@@ -126,3 +129,11 @@ def parse_tumblr_post_url(url: str) -> tuple[str, str]:
         return u.host.replace(".tumblr.com", ""), u.path[1]
 
     raise ValueError("Cannot parse Tumblr URL!")  # pragma: no cover
+
+
+def is_url_safe(path: str | Path) -> bool:
+    """
+    Returns True if a path is safe to use in a URL, False otherwise.
+    """
+    p = str(path)
+    return not ("?" in p or "#" in p or "%" in p)

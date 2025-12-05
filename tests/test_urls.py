@@ -1,11 +1,14 @@
 """Tests for `chives.urls`."""
 
+from pathlib import Path
+
 import pytest
 from vcr.cassette import Cassette
 
 from chives.urls import (
     clean_youtube_url,
     is_mastodon_host,
+    is_url_safe,
     parse_mastodon_post_url,
     parse_tumblr_post_url,
 )
@@ -128,3 +131,19 @@ class TestIsMastodonHost:
         Other websites are not Mastodon servers.
         """
         assert not is_mastodon_host(host)
+
+
+class TestIsUrlSafe:
+    """
+    Tests for `is_url_safe`.
+    """
+
+    @pytest.mark.parametrize("path", ["example.txt", Path("a/b/cat.jpg")])
+    def test_safe(self, path: str | Path) -> None:
+        """Paths which are URL safe."""
+        assert is_url_safe(path)
+
+    @pytest.mark.parametrize("path", ["is it?", Path("cat%c.jpg"), "a#b"])
+    def test_unsafe(self, path: str | Path) -> None:
+        """Paths which are not URL safe."""
+        assert not is_url_safe(path)
