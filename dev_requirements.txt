@@ -66,6 +66,8 @@ packaging==25.0
     #   twine
 pathspec==0.12.1
     # via mypy
+pillow==12.0.0
+    # via alexwlchan-chives
 pluggy==1.6.0
     # via
     #   pytest
@@ -75,8 +77,6 @@ pygments==2.19.2
     #   pytest
     #   readme-renderer
     #   rich
-pymediainfo==7.0.1
-    # via alexwlchan-chives
 pyproject-hooks==1.2.0
     # via build
 pytest==9.0.1
@@ -103,7 +103,7 @@ rfc3986==2.0.0
     # via twine
 rich==14.2.0
     # via twine
-ruff==0.14.7
+ruff==0.14.8
     # via -r dev_requirements.in
 silver-nitrate==1.8.1
     # via -r dev_requirements.in
