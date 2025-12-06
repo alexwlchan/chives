@@ -2,6 +2,7 @@
 Tests for `chives.static_site_tests`.
 """
 
+from collections.abc import Iterator
 from pathlib import Path
 import shutil
 import subprocess
@@ -24,7 +25,11 @@ def site_root(tmp_path: Path) -> Path:
 
 
 def create_test_suite[M](
-    site_root: Path, metadata: M, paths_in_metadata: set[Path]
+    site_root: Path,
+    metadata: M,
+    *,
+    paths_in_metadata: set[Path] | None = None,
+    tags_in_metadata: set[str] | None = None,
 ) -> StaticSiteTestSuite[M]:
     """
     Create a new instance of StaticSiteTestSuite with the hard-coded data
@@ -39,7 +44,10 @@ def create_test_suite[M](
             return metadata
 
         def list_paths_in_metadata(self, metadata: M) -> set[Path]:
-            return paths_in_metadata
+            return paths_in_metadata or set()
+
+        def list_tags_in_metadata(self, metadata: M) -> Iterator[str]:
+            yield from (tags_in_metadata or set())
 
     return TestSuite()
 
@@ -87,7 +95,7 @@ def test_checks_for_git_changes(site_root: Path) -> None:
     """
     The tests check that there are no uncommitted Git changes.
     """
-    t = create_test_suite(site_root, metadata=[1, 2, 3], paths_in_metadata=set())
+    t = create_test_suite(site_root, metadata=[1, 2, 3])
 
     # Initially this should fail, because there isn't a Git repo in
     # the folder.
@@ -114,7 +122,7 @@ def test_checks_for_url_safe_paths(site_root: Path) -> None:
     """
     The tests check for URL-safe paths.
     """
-    t = create_test_suite(site_root, metadata=[1, 2, 3], paths_in_metadata=set())
+    t = create_test_suite(site_root, metadata=[1, 2, 3])
 
     # This should pass trivially when the site is empty.
     t.test_every_path_is_url_safe(site_root)
@@ -141,7 +149,7 @@ def test_checks_for_av1_videos(site_root: Path) -> None:
     """
     The tests check for AV1-encoded videos.
     """
-    t = create_test_suite(site_root, metadata=[1, 2, 3], paths_in_metadata=set())
+    t = create_test_suite(site_root, metadata=[1, 2, 3])
 
     # This should pass trivially when the site is empty.
     t.test_no_videos_are_av1(site_root)
@@ -168,17 +176,46 @@ def test_checks_for_date_formats(site_root: Path) -> None:
     """
     # Check a site with correct metadata
     metadata1 = {"date_saved": "2025-12-06"}
-    t1 = create_test_suite(site_root, metadata1, paths_in_metadata=set())
+    t1 = create_test_suite(site_root, metadata1)
     t1.test_all_timestamps_are_consistent(metadata1)
 
     # Check a site with incorrect metadata
     metadata2 = {"date_saved": "AAAA-BB-CC"}
-    t2 = create_test_suite(site_root, metadata2, paths_in_metadata=set())
+    t2 = create_test_suite(site_root, metadata2)
     with pytest.raises(AssertionError):
         t2.test_all_timestamps_are_consistent(metadata2)
 
     # Check we can override the timestamp format
     metadata3 = {"date_saved": "AAAA-BB-CC"}
-    t3 = create_test_suite(site_root, metadata=metadata3, paths_in_metadata=set())
+    t3 = create_test_suite(site_root, metadata=metadata3)
     t3.date_formats.append("AAAA-BB-CC")
     t3.test_all_timestamps_are_consistent(metadata3)
+
+
+def test_checks_for_similar_tags(site_root: Path) -> None:
+    """
+    The tests check for similar and misspelt tags.
+    """
+    metadata = [1, 2, 3]
+
+    # Check a site with distinct tags.
+    t1 = create_test_suite(
+        site_root, metadata, tags_in_metadata={"red", "green", "blue"}
+    )
+    t1.test_no_similar_tags(metadata)
+
+    # Check a site with similar tags.
+    t2 = create_test_suite(
+        site_root, metadata, tags_in_metadata={"red robot", "rod robot", "rid robot"}
+    )
+    with pytest.raises(AssertionError):
+        t2.test_no_similar_tags(metadata)
+
+    # Check a site with similar tags, but marked as known-similar.
+    t3 = create_test_suite(
+        site_root,
+        metadata,
+        tags_in_metadata={"red robot", "rod robot", "green", "blue"},
+    )
+    t3.known_similar_tags = {("red robot", "rod robot")}
+    t3.test_no_similar_tags(metadata)
