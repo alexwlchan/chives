@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v14 - 2025-12-06
+
+Improve the error message on failed assertions in `StaticSiteTestSuite`.
+
 ## v13 - 2025-12-06
 
 Mark a couple more folders/files as ignored in `StaticSiteTestSuite`.

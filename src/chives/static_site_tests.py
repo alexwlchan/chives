@@ -145,7 +145,9 @@ class StaticSiteTestSuite[M](ABC):
         paths_in_metadata = self.list_paths_in_metadata(metadata)
         paths_saved_locally = self.list_paths_saved_locally(site_root)
 
-        assert paths_saved_locally - paths_in_metadata == set()
+        assert paths_saved_locally - paths_in_metadata == set(), (
+            f"Paths saved locally not in metadata: {paths_saved_locally - paths_in_metadata}"
+        )
 
     def test_every_path_is_url_safe(self, site_root: Path) -> None:
         """
@@ -159,7 +161,7 @@ class StaticSiteTestSuite[M](ABC):
                 if not is_url_safe(p):
                     bad_paths.add(p)
 
-        assert bad_paths == set()
+        assert bad_paths == set(), f"Found paths which aren't URL safe: {bad_paths}"
 
     @pytest.mark.skipif("SKIP_AV1" in os.environ, reason="skip slow test")
     def test_no_videos_are_av1(self, site_root: Path) -> None:
@@ -179,7 +181,7 @@ class StaticSiteTestSuite[M](ABC):
             if is_av1_video(site_root / p)
         }
 
-        assert av1_videos == set()
+        assert av1_videos == set(), f"Found videos encoded with AV1: {av1_videos}"
 
     date_formats = [
         "%Y-%m-%dT%H:%M:%SZ",
@@ -198,7 +200,9 @@ class StaticSiteTestSuite[M](ABC):
             if not date_matches_any_format(date_string, self.date_formats)
         }
 
-        assert bad_date_strings == set()
+        assert bad_date_strings == set(), (
+            f"Found incorrectly-formatted dates: {bad_date_strings}"
+        )
 
     @staticmethod
     def find_similar_pairs(tags: dict[str, int]) -> Iterator[tuple[str, str]]:
@@ -217,10 +221,10 @@ class StaticSiteTestSuite[M](ABC):
         """
         tags = collections.Counter(self.list_tags_in_metadata(metadata))
 
-        bad_tags = [
+        similar_tags = [
             f"{t1} ({tags[t1]}) / {t2} ({tags[t2]})"
             for t1, t2 in self.find_similar_pairs(tags)
             if (t1, t2) not in self.known_similar_tags
         ]
 
-        assert bad_tags == []
+        assert similar_tags == [], f"Found similar tags: {similar_tags}"
