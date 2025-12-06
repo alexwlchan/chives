@@ -2,7 +2,6 @@
 
 from pathlib import Path
 import re
-from typing import TypedDict
 
 
 __all__ = [

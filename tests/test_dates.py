@@ -12,9 +12,9 @@ def test_find_all_dates() -> None:
     json_value = json.loads("""{
       "doc1": {"id": "1", "date_created": "2025-10-14T05:34:07+0000"},
       "shapes": [
-      	{"color": "blue", "date_saved": "2015-03-01 23:34:39 +00:00"},
-      	{"color": "yellow", "date_saved": "2013-9-21 13:43:00Z", "is_square": true},
-      	{"color": "green", "date_saved": null}
+        {"color": "blue", "date_saved": "2015-03-01 23:34:39 +00:00"},
+        {"color": "yellow", "date_saved": "2013-9-21 13:43:00Z", "is_square": true},
+        {"color": "green", "date_saved": null}
       ],
       "date_verified": "2024-08-30"
     }""")

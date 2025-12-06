@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v15 - 2025-12-06
+
+Fix a bunch of lints from ruff; remove an unused dependency.
+
 ## v14 - 2025-12-06
 
 Improve the error message on failed assertions in `StaticSiteTestSuite`.

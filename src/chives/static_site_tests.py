@@ -10,9 +10,8 @@ import itertools
 import os
 from pathlib import Path
 import subprocess
-from typing import cast, TypedDict, TypeVar
+from typing import TypeVar
 
-from javascript_data_files import read_typed_js
 import pytest
 from rapidfuzz import fuzz
 
@@ -133,7 +132,8 @@ class StaticSiteTestSuite[M](ABC):
         paths_saved_locally = self.list_paths_saved_locally(site_root)
 
         assert paths_in_metadata - paths_saved_locally == set(), (
-            f"Paths in metadata not saved locally: {paths_in_metadata - paths_saved_locally}"
+            f"Paths in metadata not saved locally: "
+            f"{paths_in_metadata - paths_saved_locally}"
         )
 
     def test_every_local_file_is_in_metadata(
@@ -146,7 +146,8 @@ class StaticSiteTestSuite[M](ABC):
         paths_saved_locally = self.list_paths_saved_locally(site_root)
 
         assert paths_saved_locally - paths_in_metadata == set(), (
-            f"Paths saved locally not in metadata: {paths_saved_locally - paths_in_metadata}"
+            f"Paths saved locally not in metadata: "
+            f"{paths_saved_locally - paths_in_metadata}"
         )
 
     def test_every_path_is_url_safe(self, site_root: Path) -> None:

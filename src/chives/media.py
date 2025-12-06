@@ -186,7 +186,7 @@ def create_image_entity(
     """
     Create an ImageEntity for a saved image.
     """
-    from PIL import Image, ImageOps
+    from PIL import Image
 
     with Image.open(path) as im:
         entity: ImageEntity = {
