@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v13 - 2025-12-06
+
+Mark a couple more folders/files as ignored in `StaticSiteTestSuite`.
+
 ## v12 - 2025-12-06
 
 Add checks for fuzzy tag matching to `StaticSiteTestSuite`.

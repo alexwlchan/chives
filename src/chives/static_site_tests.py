@@ -91,9 +91,11 @@ class StaticSiteTestSuite[M](ABC):
             else:
                 if top_level_folder in {
                     ".git",
+                    ".mypy_cache",
                     ".pytest_cache",
                     ".ruff_cache",
                     ".venv",
+                    "data",
                     "scripts",
                     "static",
                     "tests",
@@ -105,7 +107,13 @@ class StaticSiteTestSuite[M](ABC):
                 if f == ".DS_Store":
                     continue
 
-                if root == site_root and f in {"Icon\r", ".gitignore", "index.html"}:
+                if root == site_root and f in {
+                    "Icon\r",
+                    ".gitignore",
+                    "index.html",
+                    "README.md",
+                    "TODO.md",
+                }:
                     continue
 
                 if root == site_root and f.endswith(".js"):
@@ -124,7 +132,9 @@ class StaticSiteTestSuite[M](ABC):
         paths_in_metadata = self.list_paths_in_metadata(metadata)
         paths_saved_locally = self.list_paths_saved_locally(site_root)
 
-        assert paths_in_metadata - paths_saved_locally == set()
+        assert paths_in_metadata - paths_saved_locally == set(), (
+            f"Paths in metadata not saved locally: {paths_in_metadata - paths_saved_locally}"
+        )
 
     def test_every_local_file_is_in_metadata(
         self, metadata: M, site_root: Path
