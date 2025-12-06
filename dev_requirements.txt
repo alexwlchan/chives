@@ -2,6 +2,8 @@
 #    uv pip compile dev_requirements.in --output-file dev_requirements.txt
 -e file:.
     # via -r dev_requirements.in
+annotated-types==0.7.0
+    # via pydantic
 anyio==4.12.0
     # via httpx
 build==1.3.0
@@ -41,9 +43,11 @@ jaraco-context==6.0.1
     # via keyring
 jaraco-functools==4.3.0
     # via keyring
+javascript-data-files==1.4.1
+    # via alexwlchan-chives
 keyring==25.7.0
     # via twine
-librt==0.6.3
+librt==0.7.0
     # via mypy
 markdown-it-py==4.0.0
     # via rich
@@ -72,6 +76,10 @@ pluggy==1.6.0
     # via
     #   pytest
     #   pytest-cov
+pydantic==2.12.5
+    # via javascript-data-files
+pydantic-core==2.41.5
+    # via pydantic
 pygments==2.19.2
     # via
     #   pytest
@@ -81,6 +89,7 @@ pyproject-hooks==1.2.0
     # via build
 pytest==9.0.1
     # via
+    #   alexwlchan-chives
     #   pytest-cov
     #   pytest-vcr
     #   silver-nitrate
@@ -110,8 +119,14 @@ silver-nitrate==1.8.1
 twine==6.2.0
     # via -r dev_requirements.in
 typing-extensions==4.15.0
-    # via mypy
-urllib3==2.5.0
+    # via
+    #   mypy
+    #   pydantic
+    #   pydantic-core
+    #   typing-inspection
+typing-inspection==0.4.2
+    # via pydantic
+urllib3==2.6.0
     # via
     #   requests
     #   twine

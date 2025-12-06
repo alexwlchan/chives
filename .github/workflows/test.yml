@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.13", "3.14"]
-    
+
     steps:
     - uses: actions/checkout@v6
 
@@ -51,7 +51,7 @@ jobs:
         tar -xzf dominant_colours.tar.gz --directory /usr/local/bin
         chmod +x /usr/local/bin/dominant_colours
         which dominant_colours
-    
+
     - name: Install get_live_text
       env:
         GH_TOKEN: ${{ github.token }}
@@ -63,7 +63,7 @@ jobs:
         tar -xzf get_live_text.tar.gz --directory /usr/local/bin
         chmod +x /usr/local/bin/get_live_text
         which get_live_text
-    
+
     - name: Install ffprobe
       run: |
         curl -O https://evermeet.cx/ffmpeg/ffprobe-8.0.1.7z

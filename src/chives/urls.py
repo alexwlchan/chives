@@ -4,9 +4,6 @@ from pathlib import Path
 import re
 from typing import TypedDict
 
-import httpx
-import hyperlink
-
 
 __all__ = [
     "clean_youtube_url",
@@ -22,6 +19,8 @@ def clean_youtube_url(url: str) -> str:
     Remove any query parameters from a YouTube URL that I don't
     want to include.
     """
+    import hyperlink
+
     u = hyperlink.parse(url)
 
     u = u.remove("list")
@@ -58,6 +57,8 @@ def is_mastodon_host(hostname: str) -> bool:
     #       ]
     #     }
     #
+    import httpx
+
     nodeinfo_resp = httpx.get(f"https://{hostname}/.well-known/nodeinfo")
     try:
         nodeinfo_resp.raise_for_status()
@@ -94,6 +95,8 @@ def parse_mastodon_post_url(url: str) -> tuple[str, str, str]:
     Parse a Mastodon post URL into its component parts:
     server, account, post ID.
     """
+    import hyperlink
+
     u = hyperlink.parse(url)
 
     if len(u.path) != 2:
@@ -120,6 +123,8 @@ def parse_tumblr_post_url(url: str) -> tuple[str, str]:
 
     Returns a tuple (blog_identifier, post ID).
     """
+    import hyperlink
+
     u = hyperlink.parse(url)
 
     if u.host == "www.tumblr.com":

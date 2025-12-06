@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v11 - 2025-12-06
+
+Add a new class `StaticSiteTestSuite` which runs my standard set of tests for a static site, e.g. checking every file is saved, checking timestamps use the correct format.
+
 ## v10 - 2025-12-05
 
 Add a new `is_url_safe()` function for checking if a path can be safely used in a URL.
