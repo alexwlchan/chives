@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v16 - 2025-12-06
+
+Don't require defining `list_tags_in_metadata()` in projects that don't use tags.
+
 ## v15 - 2025-12-06
 
 Fix a bunch of lints from ruff; remove an unused dependency.

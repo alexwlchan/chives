@@ -54,15 +54,17 @@ class StaticSiteTestSuite[M](ABC):
         """
         ...
 
-    @abstractmethod
-    def list_tags_in_metadata(self, metadata: M) -> Iterator[str]:
+    def list_tags_in_metadata(self, metadata: M) -> Iterator[str]:  # pragma: no cover
         """
         Returns all the tags used in the metadata, once for every usage.
 
         For example, if three documents use the same tag, the tag will
         be returned three times.
+
+        This method should be overriden in projects that use keyword tags;
+        there are some sites that don't use tags.
         """
-        ...
+        yield from []
 
     def test_no_uncommitted_git_changes(self, site_root: Path) -> None:
         """
