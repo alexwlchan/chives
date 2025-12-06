@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v12 - 2025-12-06
+
+Add checks for fuzzy tag matching to `StaticSiteTestSuite`.
+
 ## v11 - 2025-12-06
 
 Add a new class `StaticSiteTestSuite` which runs my standard set of tests for a static site, e.g. checking every file is saved, checking timestamps use the correct format.

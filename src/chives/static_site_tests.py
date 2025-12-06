@@ -3,7 +3,10 @@ Defines a set of common tests and test helpers used for all my static sites.
 """
 
 from abc import ABC, abstractmethod
+import collections
+from collections.abc import Iterator
 import glob
+import itertools
 import os
 from pathlib import Path
 import subprocess
@@ -11,6 +14,7 @@ from typing import cast, TypedDict, TypeVar
 
 from javascript_data_files import read_typed_js
 import pytest
+from rapidfuzz import fuzz
 
 from chives.dates import date_matches_any_format, find_all_dates
 from chives.media import is_av1_video
@@ -48,6 +52,16 @@ class StaticSiteTestSuite[M](ABC):
     def list_paths_in_metadata(self, metadata: M) -> set[Path]:
         """
         Returns a set of paths described in the metadata.
+        """
+        ...
+
+    @abstractmethod
+    def list_tags_in_metadata(self, metadata: M) -> Iterator[str]:
+        """
+        Returns all the tags used in the metadata, once for every usage.
+
+        For example, if three documents use the same tag, the tag will
+        be returned three times.
         """
         ...
 
@@ -175,3 +189,28 @@ class StaticSiteTestSuite[M](ABC):
         }
 
         assert bad_date_strings == set()
+
+    @staticmethod
+    def find_similar_pairs(tags: dict[str, int]) -> Iterator[tuple[str, str]]:
+        """
+        Find pairs of similar-looking tags in the collection `tags`.
+        """
+        for t1, t2 in itertools.combinations(sorted(tags), 2):
+            if fuzz.ratio(t1, t2) > 80:
+                yield (t1, t2)
+
+    known_similar_tags: set[tuple[str, str]] = set()
+
+    def test_no_similar_tags(self, metadata: M) -> None:
+        """
+        There are no similar/misspelt tags.
+        """
+        tags = collections.Counter(self.list_tags_in_metadata(metadata))
+
+        bad_tags = [
+            f"{t1} ({tags[t1]}) / {t2} ({tags[t2]})"
+            for t1, t2 in self.find_similar_pairs(tags)
+            if (t1, t2) not in self.known_similar_tags
+        ]
+
+        assert bad_tags == []
