@@ -25,6 +25,7 @@ license = "MIT"
 
 [project.optional-dependencies]
 media = ["Pillow"]
+static_site_tests = ["javascript-data-files[typed]", "pytest"]
 urls = ["httpx", "hyperlink"]
 
 [project.urls]
