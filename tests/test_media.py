@@ -90,14 +90,31 @@ class TestCreateImageEntity:
         entity = create_image_entity(fixtures_dir / filename)
         assert "has_transparency" not in entity
 
-    def test_accounts_for_exif_orientation(self, fixtures_dir: Path) -> None:
+    # These test files were downloaded from Dave Perrett repo:
+    # https://github.com/recurser/exif-orientation-examples
+
+    @pytest.mark.parametrize(
+        "filename",
+        [
+            "Landscape_0.jpg",
+            "Landscape_1.jpg",
+            "Landscape_2.jpg",
+            "Landscape_3.jpg",
+            "Landscape_4.jpg",
+            "Landscape_5.jpg",
+            "Landscape_6.jpg",
+            "Landscape_7.jpg",
+            "Landscape_8.jpg",
+        ],
+    )
+    def test_accounts_for_exif_orientation(
+        self, fixtures_dir: Path, filename: str
+    ) -> None:
         """
         The dimensions are the display dimensions, which accounts for
         the EXIF orientation.
         """
-        # This test file was downloaded from Dave Perrett repo:
-        # https://github.com/recurser/exif-orientation-examples
-        entity = create_image_entity(fixtures_dir / "Landscape_3.jpg")
+        entity = create_image_entity(fixtures_dir / filename)
         assert (entity["width"], entity["height"]) == (1800, 1200)
 
     def test_animated_image(self, fixtures_dir: Path) -> None:

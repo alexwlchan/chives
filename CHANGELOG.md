@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v17 - 2025-12-07
+
+Account for [EXIF orientation](https://alexwlchan.net/til/2024/photos-can-have-orientation-in-exif/) when getting the width/height of image entities.
+
 ## v16 - 2025-12-06
 
 Don't require defining `list_tags_in_metadata()` in projects that don't use tags.

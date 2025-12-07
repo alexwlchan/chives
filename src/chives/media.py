@@ -186,15 +186,19 @@ def create_image_entity(
     """
     Create an ImageEntity for a saved image.
     """
-    from PIL import Image
+    from PIL import Image, ImageOps
 
     with Image.open(path) as im:
+        # Account for EXIF orientation in the dimensions.
+        # See https://alexwlchan.net/til/2024/photos-can-have-orientation-in-exif/
+        transposed_im = ImageOps.exif_transpose(im)
+
         entity: ImageEntity = {
             "type": "image",
             "path": str(path),
             "tint_colour": _get_tint_colour(path, background=background),
-            "width": im.width,
-            "height": im.height,
+            "width": transposed_im.width,
+            "height": transposed_im.height,
         }
 
         if _is_animated(im):
