@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v18 - 2025-12-08
+
+Expose `get_tint_colour()` as a public function from `chives.media`.
+
 ## v17 - 2025-12-07
 
 Account for [EXIF orientation](https://alexwlchan.net/til/2024/photos-can-have-orientation-in-exif/) when getting the width/height of image entities.

@@ -28,6 +28,7 @@ __all__ = [
     "create_image_entity",
     "create_video_entity",
     "get_media_paths",
+    "get_tint_colour",
     "is_av1_video",
     "ImageEntity",
     "MediaEntity",
@@ -196,7 +197,7 @@ def create_image_entity(
         entity: ImageEntity = {
             "type": "image",
             "path": str(path),
-            "tint_colour": _get_tint_colour(path, background=background),
+            "tint_colour": get_tint_colour(path, background=background),
             "width": transposed_im.width,
             "height": transposed_im.height,
         }
@@ -295,7 +296,7 @@ def _has_transparency(im: "PIL.Image.Image") -> bool:
     return False
 
 
-def _get_tint_colour(path: str | Path, *, background: str) -> str:
+def get_tint_colour(path: str | Path, *, background: str) -> str:
     """
     Get the tint colour for an image.
     """
