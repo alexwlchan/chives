@@ -18,7 +18,7 @@ from fractions import Fraction
 import json
 from pathlib import Path
 import subprocess
-from typing import cast, Literal, NotRequired, TypedDict, TYPE_CHECKING
+from typing import Literal, NotRequired, TypedDict, TYPE_CHECKING
 
 if TYPE_CHECKING:
     import PIL
@@ -166,13 +166,10 @@ def get_media_paths(e: MediaEntity) -> set[Path]:
     return {Path(p) for p in result}
 
 
-_ThumbnailByWidthConfig = TypedDict(
-    "_ThumbnailByWidthConfig", {"out_dir": str | Path, "width": int}
-)
-_ThumbnailByHeightConfig = TypedDict(
-    "_ThumbnailByHeightConfig", {"out_dir": str | Path, "height": int}
-)
-ThumbnailConfig = _ThumbnailByWidthConfig | _ThumbnailByHeightConfig
+class ThumbnailConfig(TypedDict):
+    out_dir: Path | str
+    width: NotRequired[int]
+    height: NotRequired[int]
 
 
 def create_image_entity(
@@ -327,14 +324,10 @@ def _create_thumbnail(path: str | Path, thumbnail_config: ThumbnailConfig) -> st
     cmd = ["create_thumbnail", str(path), "--out-dir", thumbnail_config["out_dir"]]
 
     if "width" in thumbnail_config:
-        config_w = cast(_ThumbnailByWidthConfig, thumbnail_config)
-        cmd.extend(["--width", str(config_w["width"])])
+        cmd.extend(["--width", str(thumbnail_config["width"])])
 
-    elif "height" in thumbnail_config:
+    if "height" in thumbnail_config:
         cmd.extend(["--height", str(thumbnail_config["height"])])
-
-    else:  # pragma: no cover
-        raise TypeError(f"Unrecognised thumbnail config: {thumbnail_config!r}")
 
     return subprocess.check_output(cmd, text=True)
 

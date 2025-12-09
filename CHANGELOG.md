@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v19 - 2025-12-09
+
+Allow passing both `width` and `height` as part of `ThumbnailConfig`, to constrain a thumbnail to a bounding box.
+
 ## v18 - 2025-12-08
 
 Expose `get_tint_colour()` as a public function from `chives.media`.
