@@ -5,6 +5,7 @@ Defines a set of common tests and test helpers used for all my static sites.
 from abc import ABC, abstractmethod
 import collections
 from collections.abc import Iterator
+import concurrent.futures
 import glob
 import itertools
 import os
@@ -178,11 +179,15 @@ class StaticSiteTestSuite[M](ABC):
         """
         av1_videos = set()
 
-        av1_videos = {
-            p
-            for p in glob.glob("**/*.mp4", root_dir=site_root, recursive=True)
-            if is_av1_video(site_root / p)
-        }
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            futures = {
+                executor.submit(is_av1_video, site_root / p): p
+                for p in glob.glob("**/*.mp4", root_dir=site_root, recursive=True)
+            }
+
+            concurrent.futures.wait(futures)
+
+            av1_videos = {p for fut, p in futures.items() if fut.result()}
 
         assert av1_videos == set(), f"Found videos encoded with AV1: {av1_videos}"
 

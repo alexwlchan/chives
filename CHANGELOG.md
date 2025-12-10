@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v20 - 2025-12-10
+
+Use concurrency in `test_no_videos_are_av1`, which can make it faster for
+larger media collections.
+
 ## v19 - 2025-12-09
 
 Allow passing both `width` and `height` as part of `ThumbnailConfig`, to constrain a thumbnail to a bounding box.
