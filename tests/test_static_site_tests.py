@@ -6,10 +6,11 @@ from collections.abc import Iterator
 from pathlib import Path
 import shutil
 import subprocess
-from typing import TypeVar
+from typing import Any, TypeVar
 
 import pytest
 
+from chives import dates
 from chives.static_site_tests import StaticSiteTestSuite
 
 
@@ -170,26 +171,51 @@ def test_checks_for_av1_videos(site_root: Path) -> None:
         t.test_no_videos_are_av1(site_root)
 
 
-def test_checks_for_date_formats(site_root: Path) -> None:
+class TestAllTimestampsAreConsistent:
     """
-    The tests check for inconsistent date formats.
+    Tests for the `test_all_timestamps_are_consistent` method.
     """
-    # Check a site with correct metadata
-    metadata1 = {"date_saved": "2025-12-06"}
-    t1 = create_test_suite(site_root, metadata1)
-    t1.test_all_timestamps_are_consistent(metadata1)
 
-    # Check a site with incorrect metadata
-    metadata2 = {"date_saved": "AAAA-BB-CC"}
-    t2 = create_test_suite(site_root, metadata2)
-    with pytest.raises(AssertionError):
-        t2.test_all_timestamps_are_consistent(metadata2)
+    @pytest.mark.parametrize(
+        "metadata",
+        [
+            {"date_saved": "2025-12-06"},
+            {"date_saved": dates.now()},
+        ],
+    )
+    def test_allows_correct_date_formats(self, site_root: Path, metadata: Any) -> None:
+        """
+        The tests pass if all the dates are in the correct format.
+        """
+        t = create_test_suite(site_root, metadata)
+        t.test_all_timestamps_are_consistent(metadata)
 
-    # Check we can override the timestamp format
-    metadata3 = {"date_saved": "AAAA-BB-CC"}
-    t3 = create_test_suite(site_root, metadata=metadata3)
-    t3.date_formats.append("AAAA-BB-CC")
-    t3.test_all_timestamps_are_consistent(metadata3)
+    @pytest.mark.parametrize("metadata", [{"date_saved": "AAAA-BB-CC"}])
+    def test_rejects_incorrect_date_formats(
+        self, site_root: Path, metadata: Any
+    ) -> None:
+        """
+        The tests fail if the metadata has inconsistent date formats.
+        """
+        t = create_test_suite(site_root, metadata)
+        with pytest.raises(AssertionError):
+            t.test_all_timestamps_are_consistent(metadata)
+
+    def test_can_override_date_formats(self, site_root: Path) -> None:
+        """
+        A previously-blocked date format is allowed if you add it to
+        the `date_formats` list.
+        """
+        metadata = {"date_saved": "2025"}
+        t = create_test_suite(site_root, metadata)
+
+        # It fails with the default settings
+        with pytest.raises(AssertionError):
+            t.test_all_timestamps_are_consistent(metadata)
+
+        # It passes if we add the format to `date_formats`
+        t.date_formats.append("%Y")
+        t.test_all_timestamps_are_consistent(metadata)
 
 
 def test_checks_for_similar_tags(site_root: Path) -> None:

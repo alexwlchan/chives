@@ -11,6 +11,18 @@ from datetime import datetime, timezone
 from typing import Any
 
 
+def now() -> str:
+    """
+    Returns the current time in the standard format used by my static sites.
+    """
+    return (
+        datetime.now(tz=timezone.utc)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
+
+
 def find_all_dates(json_value: Any) -> Iterator[tuple[dict[str, Any], str, str]]:
     """
     Find all the timestamps in a heavily nested JSON object.
