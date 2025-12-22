@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v21 - 2025-12-22
+
+Add a method `dates.now()` to return the current time in the timestamp used by all my static sites.
+
 ## v20 - 2025-12-10
 
 Use concurrency in `test_no_videos_are_av1`, which can make it faster for
