@@ -24,6 +24,7 @@ def clean_youtube_url(url: str) -> str:
 
     u = u.remove("list")
     u = u.remove("index")
+    u = u.remove("start_radio")
     u = u.remove("t")
 
     return str(u)

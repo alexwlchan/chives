@@ -25,6 +25,10 @@ from chives.urls import (
             "https://www.youtube.com/watch?v=2OHPPSew2nY",
             "https://www.youtube.com/watch?v=2OHPPSew2nY",
         ),
+        (
+            "https://www.youtube.com/watch?v=WiIi7STG3e0&start_radio=1",
+            "https://www.youtube.com/watch?v=WiIi7STG3e0",
+        ),
     ],
 )
 def test_clean_youtube_url(url: str, cleaned_url: str) -> None:

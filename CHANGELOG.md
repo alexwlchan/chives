@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v22 - 2026-01-11
+
+Remove the `start_radio` parameter in `clean_youtube_url()`.
+
 ## v21 - 2025-12-22
 
 Add a method `dates.now()` to return the current time in the timestamp used by all my static sites.
