@@ -269,10 +269,12 @@ class TestCreateVideoEntity:
             autoplay=True,
         )
 
-        assert (
-            entity["subtitles_path"]
-            == "tests/fixtures/media/Sintel_360_10s_1MB_H264.en.vtt"
-        )
+        assert entity["subtitles"] == [
+            {
+                "path": "tests/fixtures/media/Sintel_360_10s_1MB_H264.en.vtt",
+                "label": "English",
+            }
+        ]
         assert entity["source_url"] == "https://test-videos.co.uk/sintel/mp4-h264"
         assert entity["autoplay"]
 

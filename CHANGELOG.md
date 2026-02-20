@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v23 - 2026-02-20
+
+Change the format of `VideoEntity.subtitles` to be a list of `SubtitlesEntity`, so a single video can have multiple subtitles.
+
 ## v22 - 2026-01-11
 
 Remove the `start_radio` parameter in `clean_youtube_url()`.

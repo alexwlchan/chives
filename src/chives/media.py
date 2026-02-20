@@ -100,6 +100,15 @@ class ImageEntity(TypedDict):
     source_url: NotRequired[str]
 
 
+class SubtitlesEntity(TypedDict):
+    """
+    SubtitlesEntity describes a set of subtitles.
+    """
+
+    path: str
+    label: str
+
+
 class VideoEntity(TypedDict):
     """
     VideoEntity contains all the fields I need to render a video
@@ -122,7 +131,7 @@ class VideoEntity(TypedDict):
     duration: str
 
     # Path to the subtitles for the video, if available
-    subtitles_path: NotRequired[str]
+    subtitles: NotRequired[list[SubtitlesEntity]]
 
     # The source URL of the image, if available
     source_url: NotRequired[str]
@@ -148,8 +157,10 @@ def get_media_paths(e: MediaEntity) -> set[Path]:
 
     if e["type"] == "video":
         result.add(e["path"])
+
         try:
-            result.add(e["subtitles_path"])
+            for se in e["subtitles"]:
+                result.add(se["path"])
         except KeyError:
             pass
         for p in get_media_paths(e["poster"]):
@@ -252,7 +263,7 @@ def create_video_entity(
     }
 
     if subtitles_path:
-        entity["subtitles_path"] = str(subtitles_path)
+        entity["subtitles"] = [{"path": str(subtitles_path), "label": "English"}]
 
     if source_url:
         entity["source_url"] = source_url
