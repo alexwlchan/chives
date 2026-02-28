@@ -266,16 +266,6 @@ class StaticSiteTestSuite[M](ABC):
     #
     # See https://github.com/microsoft/playwright-python/issues/313
 
-    @pytest.fixture(scope="session")
-    def browser(self) -> Iterator[Browser]:  # pragma: no cover
-        """
-        Launch an instance of WebKit we can interact with in tests.
-        """
-        with sync_playwright() as p:
-            browser = p.webkit.launch()
-            yield browser
-            browser.close()
-
     def test_loads_page_correctly(
         self, site_root: Path, url: str, browser: Browser
     ) -> None:  # pragma: no cover
@@ -309,3 +299,14 @@ class StaticSiteTestSuite[M](ABC):
 
         # Check there weren't any page errors
         assert page_errors == []
+
+
+@pytest.fixture(scope="session")
+def browser() -> Iterator[Browser]:  # pragma: no cover
+    """
+    Launch an instance of WebKit we can interact with in tests.
+    """
+    with sync_playwright() as p:
+        browser = p.webkit.launch()
+        yield browser
+        browser.close()

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v26 - 2026-02-28
+
+Extract the `browser` fixture as a standalone fixture rather than binding it to a class, so it can be reused across multiple test suites.
+
 ## v25 - 2026-02-28
 
 Change the type of `StaticSiteTestSuite.pages_to_check` from `set` to `list` to ensure consistent ordering of parametrised tests.
