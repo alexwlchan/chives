@@ -55,12 +55,12 @@ def create_pyfile(
         
         import pytest
         
-        from chives.static_site_tests import StaticSiteTestSuite
+        from chives.static_site_tests import StaticSiteTestSuite, pytest_generate_tests
         
         
         class TestSuite(StaticSiteTestSuite[Any]):
-            @pytest.fixture
-            def site_root(self) -> Path:
+            @classmethod
+            def get_site_root(self) -> Path:
                 return Path({str(site_root or pytester.path)!r})
 
             @pytest.fixture
@@ -274,3 +274,56 @@ def test_checks_for_similar_tags(pytester: Pytester) -> None:
         known_similar_tags={("red robot", "rod robot")},
     )
     pytester.runpytest("-k", keyword).assert_outcomes(passed=1)
+
+
+class TestLoadsPageCorrectly:
+    """
+    Tests for `test_loads_page_correctly`.
+    """
+
+    def test_okay(self, pytester: Pytester, site_root: Path) -> None:
+        """
+        If the page contains valid HTML, the test passes.
+        """
+        keyword = "test_loads_page_correctly"
+
+        subprocess.check_call(["playwright", "install", "webkit"], cwd=pytester.path)
+
+        (site_root / "index.html").write_text("<p>Hello world!</p>")
+
+        create_pyfile(pytester, site_root)
+        pytester.runpytest("-k", keyword).assert_outcomes(passed=1)
+
+    def test_noexist(self, pytester: Pytester) -> None:
+        """
+        If the page doesn't exist, the test fails.
+        """
+        keyword = "test_loads_page_correctly"
+
+        subprocess.check_call(["playwright", "install", "webkit"], cwd=pytester.path)
+
+        create_pyfile(pytester)
+        pytester.runpytest("-k", keyword).assert_outcomes(failed=1)
+
+    @pytest.mark.parametrize(
+        "html",
+        [
+            # Invalid JavaScript
+            "<script>???</script>",
+            #
+            # Valid JavaScript that logs an error.
+            "<script>console.error('boom!')</script>",
+        ],
+    )
+    def test_bad_js(self, pytester: Pytester, site_root: Path, html: str) -> None:
+        """
+        If the page loads but the JavaScript errors, the test fails.
+        """
+        keyword = "test_loads_page_correctly"
+
+        subprocess.check_call(["playwright", "install", "webkit"], cwd=pytester.path)
+
+        (site_root / "index.html").write_text(html)
+
+        create_pyfile(pytester, site_root)
+        pytester.runpytest("-k", keyword).assert_outcomes(failed=1)

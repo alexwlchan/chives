@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v24 - 2026-02-28
+
+In `StaticSiteTestSuite`, add testing with [Playwright](https://playwright.dev) that checks static websites render correctly.
+
+**Breaking change:** the site root must now be specified as a classmethod `get_site_root()` rather than a `site_root` fixture.
+
 ## v23 - 2026-02-20
 
 Change the format of `VideoEntity.subtitles` to be a list of `SubtitlesEntity`, so a single video can have multiple subtitles.

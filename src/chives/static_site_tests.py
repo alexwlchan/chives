@@ -13,7 +13,9 @@ from pathlib import Path
 import subprocess
 from typing import TypeVar
 
+from playwright.sync_api import Browser, sync_playwright
 import pytest
+from _pytest.mark.structures import ParameterSet
 from rapidfuzz import fuzz
 
 from chives.dates import date_matches_any_format, find_all_dates
@@ -24,6 +26,15 @@ from chives.urls import is_url_safe
 T = TypeVar("T")
 
 
+def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
+    """
+    Generate parameter sets for tests which can be parametrised and run
+    in parallel.
+    """
+    if metafunc.function.__name__ == "test_loads_page_correctly":
+        metafunc.parametrize("url", metafunc.cls.pages_to_check)
+
+
 class StaticSiteTestSuite[M](ABC):
     """
     Defines a base set of tests to run against any of my static sites.
@@ -32,9 +43,9 @@ class StaticSiteTestSuite[M](ABC):
     the fixtures and write site-specific tests.
     """
 
+    @classmethod
     @abstractmethod
-    @pytest.fixture
-    def site_root(self) -> Path:
+    def get_site_root(cls) -> Path:
         """
         Returns the path to the folder at the root of the site.
         """
@@ -55,6 +66,13 @@ class StaticSiteTestSuite[M](ABC):
         """
         ...
 
+    @pytest.fixture
+    def site_root(self) -> Path:
+        """
+        Returns the path to the folder at the root of the site.
+        """
+        return self.get_site_root()
+
     def list_tags_in_metadata(self, metadata: M) -> Iterator[str]:  # pragma: no cover
         """
         Returns all the tags used in the metadata, once for every usage.
@@ -67,6 +85,7 @@ class StaticSiteTestSuite[M](ABC):
         """
         yield from []
 
+    @pytest.mark.skipif("SKIP_GIT" in os.environ, reason="skip Git checks")
     def test_no_uncommitted_git_changes(self, site_root: Path) -> None:
         """
         There are no changes which haven't been committed to Git.
@@ -236,3 +255,58 @@ class StaticSiteTestSuite[M](ABC):
         ]
 
         assert similar_tags == [], f"Found similar tags: {similar_tags}"
+
+    pages_to_check: set[str | ParameterSet] = {
+        pytest.param("index.html", id="homepage")
+    }
+
+    # Coverage note: these two functions are tested, but coverage can't
+    # find them. Because there's no tricky branching, don't worry about
+    # checking if these lines are covered.
+    #
+    # See https://github.com/microsoft/playwright-python/issues/313
+
+    @pytest.fixture(scope="session")
+    def browser(self) -> Iterator[Browser]:  # pragma: no cover
+        """
+        Launch an instance of WebKit we can interact with in tests.
+        """
+        with sync_playwright() as p:
+            browser = p.webkit.launch()
+            yield browser
+            browser.close()
+
+    def test_loads_page_correctly(
+        self, site_root: Path, url: str, browser: Browser
+    ) -> None:  # pragma: no cover
+        """
+        The page opens in the browser with no errors.
+
+        The parameters for this test are populated by `pytest_generate_tests`.
+        """
+        full_path = site_root.absolute() / url
+        if not full_path.exists():
+            raise FileNotFoundError(full_path)
+
+        p = browser.new_page()
+
+        # Capture anything that gets logged to the console.
+        console_messages = []
+        p.on("console", lambda msg: console_messages.append(msg))
+
+        # Capture any page errors
+        page_errors = []
+        p.on("pageerror", lambda err: page_errors.append(err))
+
+        p.goto(f"file://{full_path}")
+
+        # Check there weren't any console errors logged to the page.
+        console_errors = [
+            msg.text
+            for msg in console_messages
+            if msg.type == "error" or msg.type == "warning"
+        ]
+        assert console_errors == []
+
+        # Check there weren't any page errors
+        assert page_errors == []

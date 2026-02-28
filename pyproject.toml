@@ -25,7 +25,7 @@ license = "MIT"
 
 [project.optional-dependencies]
 media = ["Pillow"]
-static_site_tests = ["pytest", "rapidfuzz"]
+static_site_tests = ["playwright", "pytest", "rapidfuzz"]
 urls = ["httpx", "hyperlink"]
 
 [project.urls]

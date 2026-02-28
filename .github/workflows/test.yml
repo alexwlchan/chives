@@ -71,6 +71,9 @@ jobs:
         chmod +x /usr/local/bin/ffprobe
         which ffprobe
 
+    - name: Install WebKit
+      run: playwright install webkit
+
     - name: Check formatting
       run: |
         ruff check .
