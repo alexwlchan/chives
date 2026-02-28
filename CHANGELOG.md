@@ -4,6 +4,8 @@
 
 Change the type of `StaticSiteTestSuite.pages_to_check` from `set` to `list` to ensure consistent ordering of parametrised tests.
 
+Fix a bug when testing URLs with query parameters.
+
 ## v24 - 2026-02-28
 
 In `StaticSiteTestSuite`, add testing with [Playwright](https://playwright.dev) that checks static websites render correctly.

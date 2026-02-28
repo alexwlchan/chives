@@ -285,8 +285,7 @@ class StaticSiteTestSuite[M](ABC):
         The parameters for this test are populated by `pytest_generate_tests`.
         """
         full_path = site_root.absolute() / url
-        if not full_path.exists():
-            raise FileNotFoundError(full_path)
+        file_uri = f"file://{full_path}"
 
         p = browser.new_page()
 
@@ -298,7 +297,7 @@ class StaticSiteTestSuite[M](ABC):
         page_errors = []
         p.on("pageerror", lambda err: page_errors.append(err))
 
-        p.goto(f"file://{full_path}")
+        p.goto(file_uri)
 
         # Check there weren't any console errors logged to the page.
         console_errors = [
