@@ -301,7 +301,7 @@ class StaticSiteTestSuite[M](ABC):
         assert page_errors == []
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture
 def browser() -> Iterator[Browser]:  # pragma: no cover
     """
     Launch an instance of WebKit we can interact with in tests.

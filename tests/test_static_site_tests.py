@@ -55,7 +55,11 @@ def create_pyfile(
         
         import pytest
         
-        from chives.static_site_tests import StaticSiteTestSuite, pytest_generate_tests
+        from chives.static_site_tests import (
+            StaticSiteTestSuite,
+            browser,
+            pytest_generate_tests,
+        )
         
         
         class TestSuite(StaticSiteTestSuite[Any]):
