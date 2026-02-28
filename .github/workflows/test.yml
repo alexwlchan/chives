@@ -66,7 +66,7 @@ jobs:
 
     - name: Install ffprobe
       run: |
-        curl -O https://evermeet.cx/ffmpeg/ffprobe-8.0.1.7z
+        curl --location -O https://evermeet.cx/ffmpeg/ffprobe-8.0.1.7z
         tar -xzf ffprobe-8.0.1.7z --directory /usr/local/bin
         chmod +x /usr/local/bin/ffprobe
         which ffprobe
