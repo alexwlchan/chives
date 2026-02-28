@@ -256,9 +256,9 @@ class StaticSiteTestSuite[M](ABC):
 
         assert similar_tags == [], f"Found similar tags: {similar_tags}"
 
-    pages_to_check: set[str | ParameterSet] = {
+    pages_to_check: list[str | ParameterSet] = [
         pytest.param("index.html", id="homepage")
-    }
+    ]
 
     # Coverage note: these two functions are tested, but coverage can't
     # find them. Because there's no tricky branching, don't worry about
