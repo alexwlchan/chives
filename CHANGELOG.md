@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v27 - 2026-02-28
+
+Don't reuse the browser fixture between tests.
+
 ## v26 - 2026-02-28
 
 Extract the `browser` fixture as a standalone fixture rather than binding it to a class, so it can be reused across multiple test suites.
