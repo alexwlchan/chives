@@ -1,1 +1,2 @@
-class Cassette: ...
+class Cassette:
+    _path: str

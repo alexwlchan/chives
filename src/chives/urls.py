@@ -1,7 +1,15 @@
 """Code for manipulating and tidying URLs."""
 
+import json
 from pathlib import Path
 import re
+import ssl
+from ssl import SSLCertVerificationError
+import urllib.error
+from urllib.error import HTTPError
+import urllib.request
+
+import certifi
 
 
 __all__ = [
@@ -43,6 +51,8 @@ def is_mastodon_host(hostname: str) -> bool:
     }:
         return True
 
+    ssl_context = ssl.create_default_context(cafile=certifi.where())
+
     # See https://github.com/mastodon/mastodon/discussions/30547
     #
     # Fist we look at /.well-known/nodeinfo, which returns a response
@@ -57,13 +67,18 @@ def is_mastodon_host(hostname: str) -> bool:
     #       ]
     #     }
     #
-    import httpx
+    nodeinfo_url = f"https://{hostname}/.well-known/nodeinfo"
 
-    nodeinfo_resp = httpx.get(f"https://{hostname}/.well-known/nodeinfo")
     try:
-        nodeinfo_resp.raise_for_status()
-    except Exception:
+        nodeinfo_resp = urllib.request.urlopen(nodeinfo_url, context=ssl_context)
+    except HTTPError as err:
+        err.close()
         return False
+    except SSLCertVerificationError:
+        return False
+
+    nodeinfo = json.loads(nodeinfo_resp.read())
+    nodeinfo_resp.close()
 
     # Then we try to call $.links[0].href, which should return something
     # like:
@@ -74,18 +89,16 @@ def is_mastodon_host(hostname: str) -> bool:
     #       …
     #
     try:
-        href = nodeinfo_resp.json()["links"][0]["href"]
+        link_href = nodeinfo["links"][0]["href"]
     except (KeyError, IndexError):  # pragma: no cover
         return False
 
-    link_resp = httpx.get(href)
-    try:
-        link_resp.raise_for_status()
-    except Exception:  # pragma: no cover
-        return False
+    link_resp = urllib.request.urlopen(link_href, context=ssl_context)
+    link_info = json.loads(link_resp.read())
+    link_resp.close()
 
     try:
-        return bool(link_resp.json()["software"]["name"] == "mastodon")
+        return bool(link_info["software"]["name"] == "mastodon")
     except (KeyError, IndexError):  # pragma: no cover
         return False
 

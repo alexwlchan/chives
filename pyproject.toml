@@ -26,7 +26,7 @@ license = "MIT"
 [project.optional-dependencies]
 media = ["Pillow"]
 static_site_tests = ["playwright", "pytest", "rapidfuzz"]
-urls = ["httpx", "hyperlink"]
+urls = ["certifi", "hyperlink"]
 
 [project.urls]
 "Homepage" = "https://github.com/alexwlchan/chives"

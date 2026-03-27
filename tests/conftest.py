@@ -1,6 +1,6 @@
 """Shared helpers and test fixtures."""
 
-from nitrate.cassettes import cassette_name, vcr_cassette
+from cassettes import cassette_name, vcr_cassette
 
 pytest_plugins = "pytester"
 
