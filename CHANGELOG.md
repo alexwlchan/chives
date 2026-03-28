@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v28 - 2026-03-28
+
+Remove the httpx dependency in `chives.urls`.
+
 ## v27 - 2026-02-28
 
 Don't reuse the browser fixture between tests.
