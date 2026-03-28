@@ -1,17 +1,13 @@
 interactions:
 - request:
-    body: ''
+    body: null
     headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
       Connection:
-      - keep-alive
+      - close
       Host:
       - social.jvns.ca
       User-Agent:
-      - python-httpx/0.28.1
+      - Python-urllib/3.14
     method: GET
     uri: https://social.jvns.ca/.well-known/nodeinfo
   response:
@@ -19,19 +15,21 @@ interactions:
       string: '{"links":[{"rel":"http://nodeinfo.diaspora.software/ns/schema/2.0","href":"https://social.jvns.ca/nodeinfo/2.0"}]}'
     headers:
       Connection:
-      - keep-alive
+      - close
+      Content-Length:
+      - '114'
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 04 Dec 2025 12:14:49 GMT
+      - Sat, 28 Mar 2026 11:28:19 GMT
       Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
       - max-age=31536000
-      Transfer-Encoding:
-      - chunked
+      Vary:
+      - Accept-Encoding
+      - Origin
       cache-control:
       - max-age=259200, public
-      content-length:
-      - '114'
       content-security-policy:
       - 'base-uri ''none''; default-src ''none''; frame-ancestors ''none''; font-src
         ''self'' https://social.jvns.ca; img-src ''self'' data: blob: https://social.jvns.ca
@@ -40,61 +38,63 @@ interactions:
         ''self'' blob: https://social.jvns.ca; worker-src ''self'' blob: https://social.jvns.ca;
         connect-src ''self'' data: blob: https://social.jvns.ca https://cdn.masto.host
         wss://social.jvns.ca; script-src ''self'' https://social.jvns.ca ''wasm-unsafe-eval'';
-        frame-src ''self'' https:; style-src ''self'' https://social.jvns.ca ''nonce-cYXJpX/juTVw0Sc+MAA7BQ=='''
+        frame-src ''self'' https:; style-src ''self'' https://social.jvns.ca ''nonce-SLG/a2lOZjjg0yVI2h0UFQ=='''
       etag:
       - W/"41981c7ccfa1674c1535b6eea835d7e5"
       referrer-policy:
       - same-origin
       server:
       - Mastodon
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains
+      - max-age=31536000
       vary:
+      - Accept-Encoding
       - Origin
       x-content-type-options:
       - nosniff
       x-frame-options:
       - DENY
       x-request-id:
-      - d4888141-9cb3-4305-b5dd-a8b0842a2d05
+      - 7492826e-5911-4ac8-bd7c-1ef18fb5a3c1
       x-runtime:
-      - '0.003398'
+      - '0.001392'
       x-xss-protection:
       - '0'
     status:
       code: 200
       message: OK
 - request:
-    body: ''
+    body: null
     headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
       Connection:
-      - keep-alive
+      - close
       Host:
       - social.jvns.ca
       User-Agent:
-      - python-httpx/0.28.1
+      - Python-urllib/3.14
     method: GET
     uri: https://social.jvns.ca/nodeinfo/2.0
   response:
     body:
-      string: '{"version":"2.0","software":{"name":"mastodon","version":"4.5.2"},"protocols":["activitypub"],"services":{"outbound":[],"inbound":[]},"usage":{"users":{"total":4,"activeMonth":4,"activeHalfyear":4},"localPosts":7409},"openRegistrations":false,"metadata":{"nodeName":"Mastodon","nodeDescription":""}}'
+      string: '{"version":"2.0","software":{"name":"mastodon","version":"4.5.8"},"protocols":["activitypub"],"services":{"outbound":[],"inbound":[]},"usage":{"users":{"total":4,"activeMonth":4,"activeHalfyear":4},"localPosts":7915},"openRegistrations":false,"metadata":{"nodeName":"Mastodon","nodeDescription":""}}'
     headers:
       Connection:
-      - keep-alive
+      - close
+      Content-Length:
+      - '299'
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 04 Dec 2025 12:14:49 GMT
+      - Sat, 28 Mar 2026 11:28:19 GMT
       Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
       - max-age=31536000
-      Transfer-Encoding:
-      - chunked
+      Vary:
+      - Accept-Encoding
+      - Origin
       cache-control:
       - max-age=1800, public
-      content-length:
-      - '299'
       content-security-policy:
       - 'base-uri ''none''; default-src ''none''; frame-ancestors ''none''; font-src
         ''self'' https://social.jvns.ca; img-src ''self'' data: blob: https://social.jvns.ca
@@ -103,23 +103,27 @@ interactions:
         ''self'' blob: https://social.jvns.ca; worker-src ''self'' blob: https://social.jvns.ca;
         connect-src ''self'' data: blob: https://social.jvns.ca https://cdn.masto.host
         wss://social.jvns.ca; script-src ''self'' https://social.jvns.ca ''wasm-unsafe-eval'';
-        frame-src ''self'' https:; style-src ''self'' https://social.jvns.ca ''nonce-KudwCpfFUyr8bIzc9hLCuA=='''
+        frame-src ''self'' https:; style-src ''self'' https://social.jvns.ca ''nonce-uvtrA197UKg93d3cEYFepw=='''
       etag:
-      - W/"def238b77fc5db88a115321ee60e49e7"
+      - W/"e5770b11e9504692808d5c4bbb2a1741"
       referrer-policy:
       - same-origin
       server:
       - Mastodon
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains
+      - max-age=31536000
       vary:
-      - Accept, Origin
+      - Accept-Encoding
+      - Origin
       x-content-type-options:
       - nosniff
       x-frame-options:
       - DENY
       x-request-id:
-      - 3ef92cee-53b7-41e1-b1f1-5b9b094c5616
+      - 0161e669-c01b-4ad0-b976-78c6185f6157
       x-runtime:
-      - '0.008559'
+      - '0.001917'
       x-xss-protection:
       - '0'
     status:

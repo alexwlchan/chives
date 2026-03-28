@@ -123,7 +123,7 @@ class TestIsMastodonHost:
             # These are regular Internet websites which don't expose
             # the /.well-known/nodeinfo endpoint
             "example.com",
-            "alexwlchan.net",
+            "tailscale.com",
             #
             # PeerTube exposes /.well-known/nodeinfo, but it's running
             # different software.

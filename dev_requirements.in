@@ -3,6 +3,6 @@
 build
 mypy
 pytest-cov
+pytest-vcr
 ruff
-silver-nitrate[cassettes]
 twine
