@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v29 - 2026-03-29
+
+Add a `chives.text` package which exports a `smartify()` function for applying SmartyPants-style formatting to a string -- adding curly quotes and smart dashes.
+
 ## v28 - 2026-03-28
 
 Remove the httpx dependency in `chives.urls`.

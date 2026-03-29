@@ -28,7 +28,7 @@ iniconfig==2.3.0
     # via pytest
 jaraco-classes==3.4.0
     # via keyring
-jaraco-context==6.1.1
+jaraco-context==6.1.2
     # via keyring
 jaraco-functools==4.4.0
     # via keyring
@@ -79,7 +79,7 @@ pytest==9.0.2
     #   alexwlchan-chives
     #   pytest-cov
     #   pytest-vcr
-pytest-cov==7.0.0
+pytest-cov==7.1.0
     # via -r dev_requirements.in
 pytest-vcr==1.0.2
     # via -r dev_requirements.in
@@ -101,6 +101,8 @@ rich==14.3.3
     # via twine
 ruff==0.15.7
     # via -r dev_requirements.in
+smartypants==2.0.2
+    # via alexwlchan-chives
 twine==6.2.0
     # via -r dev_requirements.in
 typing-extensions==4.15.0
