@@ -1,0 +1,38 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Connection:
+      - close
+      Host:
+      - httpbin.org
+      User-Agent:
+      - Python-urllib/3.14
+    method: GET
+    uri: http://httpbin.org/get?package=chives&author=alexwlchan
+  response:
+    body:
+      string: "{\n  \"args\": {\n    \"author\": \"alexwlchan\", \n    \"package\":
+        \"chives\"\n  }, \n  \"headers\": {\n    \"Accept-Encoding\": \"identity\",
+        \n    \"Host\": \"httpbin.org\", \n    \"User-Agent\": \"Python-urllib/3.14\",
+        \n    \"X-Amzn-Trace-Id\": \"Root=1-69ca0986-61e735f66a8e8cde268dbe06\"\n
+        \ }, \n  \"origin\": \"89.168.152.222\", \n  \"url\": \"http://httpbin.org/get?package=chives&author=alexwlchan\"\n}\n"
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - close
+      Content-Length:
+      - '365'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 30 Mar 2026 05:26:30 GMT
+      Server:
+      - gunicorn/19.9.0
+    status:
+      code: 200
+      message: OK
+version: 1

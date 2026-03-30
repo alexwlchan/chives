@@ -2,6 +2,7 @@
 Tests for `chives.static_site_tests`.
 """
 
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -52,16 +53,16 @@ def create_pyfile(
         from collections.abc import Iterator
         from pathlib import Path, PosixPath
         from typing import Any
-        
+
         import pytest
-        
+
         from chives.static_site_tests import (
             StaticSiteTestSuite,
             browser,
             pytest_generate_tests,
         )
-        
-        
+
+
         class TestSuite(StaticSiteTestSuite[Any]):
             @classmethod
             def get_site_root(self) -> Path:
@@ -76,9 +77,9 @@ def create_pyfile(
 
             def list_tags_in_metadata(self, metadata: Any) -> Iterator[str]:
                 yield from {repr(tags_in_metadata or set())}
-            
+
             date_formats = {repr(date_formats or default_date_formats)}
-            
+
             known_similar_tags = {repr(known_similar_tags or set())}
         """
     )
@@ -280,6 +281,9 @@ def test_checks_for_similar_tags(pytester: Pytester) -> None:
     pytester.runpytest("-k", keyword).assert_outcomes(passed=1)
 
 
+@pytest.mark.skipif(
+    "SKIP_PLAYWRIGHT" in os.environ, reason="skip slow Playwright tests"
+)
 class TestLoadsPageCorrectly:
     """
     Tests for `test_loads_page_correctly`.
