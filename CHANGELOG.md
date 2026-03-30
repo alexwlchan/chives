@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v30 - 2026-03-30
+
+Add a `chives.fetch` package which has some helper functions for making HTTP requests using the standard library.
+
 ## v29 - 2026-03-29
 
 Add a `chives.text` package which exports a `smartify()` function for applying SmartyPants-style formatting to a string -- adding curly quotes and smart dashes.

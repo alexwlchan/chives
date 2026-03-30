@@ -1,4 +1,4 @@
--e file:.[media,static_site_tests,text,urls]
+-e file:.[fetch,media,static_site_tests,text,urls]
 
 build
 mypy

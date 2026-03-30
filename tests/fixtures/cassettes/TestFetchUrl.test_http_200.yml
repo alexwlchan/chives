@@ -1,0 +1,38 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Connection:
+      - close
+      Host:
+      - httpbin.org
+      User-Agent:
+      - Python-urllib/3.14
+    method: GET
+    uri: http://httpbin.org/robots.txt
+  response:
+    body:
+      string: 'User-agent: *
+
+        Disallow: /deny
+
+        '
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - close
+      Content-Length:
+      - '30'
+      Content-Type:
+      - text/plain
+      Date:
+      - Mon, 30 Mar 2026 04:59:39 GMT
+      Server:
+      - gunicorn/19.9.0
+    status:
+      code: 200
+      message: OK
+version: 1

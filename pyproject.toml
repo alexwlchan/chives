@@ -24,6 +24,7 @@ dynamic = ["version"]
 license = "MIT"
 
 [project.optional-dependencies]
+fetch = ["certifi"]
 media = ["Pillow"]
 static_site_tests = ["playwright", "pytest", "rapidfuzz"]
 text = ["smartypants"]

@@ -2,7 +2,7 @@
 #    uv pip compile dev_requirements.in --output-file=dev_requirements.txt --exclude-newer=P7D
 -e file:.
     # via -r dev_requirements.in
-build==1.4.0
+build==1.4.2
     # via -r dev_requirements.in
 certifi==2026.2.25
     # via
@@ -48,7 +48,7 @@ mypy==1.19.1
     # via -r dev_requirements.in
 mypy-extensions==1.1.0
     # via mypy
-nh3==0.3.3
+nh3==0.3.4
     # via readme-renderer
 packaging==26.0
     # via
@@ -67,7 +67,7 @@ pluggy==1.6.0
     #   pytest-cov
 pyee==13.0.1
     # via playwright
-pygments==2.19.2
+pygments==2.20.0
     # via
     #   pytest
     #   readme-renderer
@@ -89,7 +89,7 @@ rapidfuzz==3.14.3
     # via alexwlchan-chives
 readme-renderer==44.0
     # via twine
-requests==2.32.5
+requests==2.33.0
     # via
     #   requests-toolbelt
     #   twine
@@ -99,7 +99,7 @@ rfc3986==2.0.0
     # via twine
 rich==14.3.3
     # via twine
-ruff==0.15.7
+ruff==0.15.8
     # via -r dev_requirements.in
 smartypants==2.0.2
     # via alexwlchan-chives
