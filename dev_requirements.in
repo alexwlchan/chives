@@ -1,8 +1,7 @@
 -e file:.[fetch,media,static_site_tests,text,urls]
 
-build
+keyring
 mypy
 pytest-cov
 pytest-vcr
 ruff
-twine
