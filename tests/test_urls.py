@@ -41,22 +41,31 @@ def test_clean_youtube_url(url: str, cleaned_url: str) -> None:
 @pytest.mark.parametrize(
     "url, server, acct, post_id",
     [
-        (
+        pytest.param(
             "https://iconfactory.world/@Iconfactory/115650922400392083",
             "iconfactory.world",
             "Iconfactory",
             "115650922400392083",
+            id="iconfactory",
         ),
-        (
+        pytest.param(
             "https://social.alexwlchan.net/@chris__martin@functional.cafe/113369395383537892",
             "functional.cafe",
             "chris__martin",
-            "113369395383537892",
+            "113369395366414375",
+            id="alexwlchan_redirect",
+        ),
+        pytest.param(
+            "https://social.alexwlchan.net/@alex/116300317590482708",
+            "social.alexwlchan.net",
+            "alex",
+            "116300317590482708",
+            id="alexwlchan_self",
         ),
     ],
 )
 def test_parse_mastodon_post_url(
-    url: str, server: str, acct: str, post_id: str
+    vcr_cassette: Cassette, url: str, server: str, acct: str, post_id: str
 ) -> None:
     """
     Mastodon post URLs are parsed correctly.
@@ -67,13 +76,32 @@ def test_parse_mastodon_post_url(
 @pytest.mark.parametrize(
     "url, error",
     [
-        ("https://mastodon.social/", "Cannot parse Mastodon URL"),
-        ("https://mastodon.social/about", "Cannot parse Mastodon URL"),
-        ("https://mastodon.social/about/subdir", "Cannot find `acct`"),
-        ("https://mastodon.social/@example/about", "Mastodon post ID is not numeric"),
+        pytest.param(
+            "https://mastodon.social/", "Cannot parse Mastodon URL", id="no_path"
+        ),
+        pytest.param(
+            "https://mastodon.social/about",
+            "Cannot parse Mastodon URL",
+            id="no_post_id",
+        ),
+        pytest.param(
+            "https://mastodon.social/about/subdir", "Cannot find `acct`", id="no_acct"
+        ),
+        pytest.param(
+            "https://mastodon.social/@example/about",
+            "Mastodon post ID is not numeric",
+            id="non_numeric_post_id",
+        ),
+        pytest.param(
+            "https://social.alexwlchan.net/@does@not.exist/123",
+            "Cannot parse Mastodon URL",
+            id="alexwlchan_does_not_exist",
+        ),
     ],
 )
-def test_parse_mastodon_post_url_errors(url: str, error: str) -> None:
+def test_parse_mastodon_post_url_errors(
+    vcr_cassette: Cassette, url: str, error: str
+) -> None:
     """
     parse_mastodon_post_url returns a useful error if it can't parse the URL.
     """
@@ -101,6 +129,23 @@ def test_parse_tumblr_post_url(url: str, blog_identifier: str, post_id: str) -> 
     Tumblr URLs are parsed correctly.
     """
     assert parse_tumblr_post_url(url) == (blog_identifier, post_id)
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        "https://www.tumblr.com/",
+        "https://www.tumblr.com/staff/",
+        "https://staff.tumblr.com/",
+        "https://www.example.com/",
+    ],
+)
+def test_parse_bad_tumblr_url(url: str) -> None:
+    """
+    Parsing a non-Tumblr URL throws a ValueError.
+    """
+    with pytest.raises(ValueError, match="Cannot parse Tumblr URL"):
+        parse_tumblr_post_url(url)
 
 
 class TestIsMastodonHost:

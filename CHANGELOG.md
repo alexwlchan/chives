@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v31 - 2026-03-31
+
+Remove the `hyperlink` dependency.
+
 ## v30 - 2026-03-30
 
 Add a `chives.fetch` package which has some helper functions for making HTTP requests using the standard library.

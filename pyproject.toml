@@ -28,7 +28,7 @@ fetch = ["certifi"]
 media = ["Pillow"]
 static_site_tests = ["playwright", "pytest", "rapidfuzz"]
 text = ["smartypants"]
-urls = ["certifi", "hyperlink"]
+urls = ["certifi"]
 
 [project.urls]
 "Homepage" = "https://github.com/alexwlchan/chives"

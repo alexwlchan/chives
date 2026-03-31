@@ -7,9 +7,12 @@ import ssl
 from ssl import SSLCertVerificationError
 import urllib.error
 from urllib.error import HTTPError
+from urllib.parse import SplitResult, parse_qs, urlencode, urlsplit
 import urllib.request
 
 import certifi
+
+from chives.fetch import fetch_url
 
 
 __all__ = [
@@ -26,16 +29,24 @@ def clean_youtube_url(url: str) -> str:
     Remove any query parameters from a YouTube URL that I don't
     want to include.
     """
-    import hyperlink
+    u = urlsplit(url)
 
-    u = hyperlink.parse(url)
+    query = parse_qs(u.query)
+    for param in ("list", "index", "start_radio", "t"):
+        try:
+            del query[param]
+        except KeyError:
+            pass
 
-    u = u.remove("list")
-    u = u.remove("index")
-    u = u.remove("start_radio")
-    u = u.remove("t")
+    updated_u = SplitResult(
+        scheme=u.scheme,
+        netloc=u.netloc,
+        path=u.path,
+        query=urlencode(query, doseq=True),
+        fragment=u.fragment,
+    )
 
-    return str(u)
+    return updated_u.geturl()
 
 
 def is_mastodon_host(hostname: str) -> bool:
@@ -108,26 +119,35 @@ def parse_mastodon_post_url(url: str) -> tuple[str, str, str]:
     Parse a Mastodon post URL into its component parts:
     server, account, post ID.
     """
-    import hyperlink
+    u = urlsplit(url)
+    path = u.path.strip("/").split("/")
 
-    u = hyperlink.parse(url)
-
-    if len(u.path) != 2:
+    if len(path) != 2:
         raise ValueError("Cannot parse Mastodon URL!")
 
-    if not u.path[0].startswith("@"):
+    if not path[0].startswith("@"):
         raise ValueError("Cannot find `acct` in Mastodon URL!")
 
-    if not re.fullmatch(r"^[0-9]+$", u.path[1]):
+    if not re.fullmatch(r"^[0-9]+$", path[1]):
         raise ValueError("Mastodon post ID is not numeric!")
 
-    if u.host == "social.alexwlchan.net":
-        _, acct, server = u.path[0].split("@")
-    else:
-        server = u.host
-        acct = u.path[0].replace("@", "")
+    if u.netloc == "social.alexwlchan.net" and path[0] != "@alex":
+        _, acct, server = path[0].split("@")
+        html = fetch_url(url).decode("utf8")
+        if m := re.search(
+            f'<a rel="noopener" href="https://{server}/@{acct}/(?P<post_id>[0-9]+)">',
+            html,
+        ):
+            post_id = m.group("post_id")
+            return server, acct, post_id
+        else:
+            raise ValueError("Cannot parse Mastodon URL!")
 
-    return server, acct, u.path[1]
+    server = u.netloc
+    acct = path[0].replace("@", "")
+    post_id = path[1]
+
+    return server, acct, post_id
 
 
 def parse_tumblr_post_url(url: str) -> tuple[str, str]:
@@ -136,17 +156,17 @@ def parse_tumblr_post_url(url: str) -> tuple[str, str]:
 
     Returns a tuple (blog_identifier, post ID).
     """
-    import hyperlink
+    u = urlsplit(url)
+    path = u.path.strip("/").split("/")
 
-    u = hyperlink.parse(url)
+    if u.netloc == "www.tumblr.com" and len(path) >= 2:
+        return path[0], path[1]
 
-    if u.host == "www.tumblr.com":
-        return u.path[0], u.path[1]
+    elif u.netloc.endswith(".tumblr.com") and len(path) >= 3 and path[0] == "post":
+        return u.netloc.replace(".tumblr.com", ""), path[1]
 
-    if u.host.endswith(".tumblr.com") and len(u.path) >= 3 and u.path[0] == "post":
-        return u.host.replace(".tumblr.com", ""), u.path[1]
-
-    raise ValueError("Cannot parse Tumblr URL!")  # pragma: no cover
+    else:
+        raise ValueError("Cannot parse Tumblr URL!")
 
 
 def is_url_safe(path: str | Path) -> bool:
