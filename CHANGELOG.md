@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v32 - 2026-04-01
+
+Add a `download_image` function to `chives.fetch`.
+
 ## v31 - 2026-03-31
 
 Remove the `hyperlink` dependency.

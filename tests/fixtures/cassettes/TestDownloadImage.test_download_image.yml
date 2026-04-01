@@ -1,0 +1,31 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Host:
+      - alexwlchan.net
+    method: GET
+    uri: https://alexwlchan.net/images/2026/470906.png
+  response:
+    body:
+      string: !!binary |
+        iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAAOVBMVEU+BwU/BwU/CAVACAVBCAVC
+        CAVDCAVECAVGCAVHCQZICQZJCQZKCQZLCQZMCQZNCQZOCQZOCgZQCgam5+ZPAAAB5ElEQVR42u3d
+        wQqCQABFUTMNEyHw//8xURDDhH6ht5hZnbt/CKeZ5VD3aNLGeLHEi1e82ONFHy+6RrBgwYIFC5Zg
+        wYIFCxYswYIFCxYsWIIFCxYsWLAECxYsWLBgCRYsWLBgwRIsWLBgwYIlWLBgwYIFS/9jTfFkjRdz
+        vPjEi/xd6uBkuYawYMESLFiwYMGCJViwYMGCBUuwYMGCBQuWYMGCBQsWLMGCBQsWLFiCBQsWLFiw
+        BAsWLFiwYAkWrKJYZzy5x4v8G228uOLF18lyDWHBgiVYsGDBggVLsGDBggULlmDBggULFizBggUL
+        FixYggULFixYsAQLFixYsGAJFixYsGDBEixYRbFqvEsd48UWL27xonWyXENYsGAJFixYsGDBEixY
+        sGDBgiVYsGDBggVLsGDBggULlmDBggULFizBggULFixYggULFixYsAQLVlGsJZ7UePua/19qX+Eb
+        ThYsWLBgwRIsWLBgwYIlWLBgwYIFS7BgwYIFC5ZgwYIFCxYswYIFCxYsWIIFCxYsWLAECxYsWLBg
+        CVaCNceTd7w4KvyGz3hxOlmuISxYsAQLFixYsGAJFixYsGDBEixYsGDBgiVYsGDBggVLsGDBggUL
+        lmDBggULFizBggULFixYggWrZD/yQRWvEwG66AAAAABJRU5ErkJggg==
+    headers:
+      Content-Length:
+      - '610'
+      Content-Type:
+      - image/png
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -2,8 +2,10 @@
 Tests for `chives.fetch`.
 """
 
+import filecmp
 from io import BytesIO
 import json
+from pathlib import Path
 from typing import Any
 from urllib.error import HTTPError
 
@@ -12,7 +14,7 @@ import pytest
 import vcr
 from vcr.cassette import Cassette
 
-from chives.fetch import fetch_image, fetch_url
+from chives.fetch import download_image, fetch_image, fetch_url
 
 
 class TestFetchUrl:
@@ -90,7 +92,7 @@ class TestFetchImage:
         """
         url = "http://httpbin.org/status/200"
 
-        with pytest.raises(RuntimeError, match="unrecognised image format"):
+        with pytest.raises(ValueError, match="unrecognised image format"):
             fetch_image(url)
 
     def test_no_content_type_header(self, cassette_name: str) -> None:
@@ -114,3 +116,54 @@ class TestFetchImage:
                 RuntimeError, match="no Content-Type header in response"
             ):
                 fetch_image(url)
+
+
+class TestDownloadImage:
+    """
+    Tests for `download_image`.
+    """
+
+    def test_download_image(self, tmp_path: Path, vcr_cassette: Cassette) -> None:
+        """
+        Download an image and compare the result.
+        """
+        url = "https://alexwlchan.net/images/2026/470906.png"
+
+        out_path = download_image(url, tmp_path / "470906")
+        assert out_path == tmp_path / "470906.png"
+        assert out_path.exists()
+
+        assert filecmp.cmp(out_path, "tests/fixtures/media/470906.png", shallow=False)
+
+    def test_download_to_nested_path(
+        self, tmp_path: Path, vcr_cassette: Cassette
+    ) -> None:
+        """
+        You can download an image to a heavily nested path, and it creates
+        the parent directory.
+        """
+        url = "https://alexwlchan.net/images/2026/470906.png"
+
+        out_path = download_image(url, tmp_path / "a/b/c/470906")
+        assert out_path == tmp_path / "a/b/c/470906.png"
+        assert out_path.exists()
+
+        assert filecmp.cmp(out_path, "tests/fixtures/media/470906.png", shallow=False)
+
+    def test_cannot_download_twice(
+        self, tmp_path: Path, vcr_cassette: Cassette
+    ) -> None:
+        """
+        Trying to overwrite an existing image throws a FileExistsError.
+        """
+        url1 = "https://alexwlchan.net/images/2026/470906.png"
+        url2 = "https://alexwlchan.net/images/2026/f69b96.png"
+
+        out_path = download_image(url1, tmp_path / "squares")
+        assert filecmp.cmp(out_path, "tests/fixtures/media/470906.png", shallow=False)
+
+        with pytest.raises(FileExistsError):
+            download_image(url2, tmp_path / "squares")
+
+        # The file contents are the same as the first download.
+        assert filecmp.cmp(out_path, "tests/fixtures/media/470906.png", shallow=False)
