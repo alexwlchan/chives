@@ -11,7 +11,7 @@ import urllib.request
 import certifi
 
 
-__all__ = ["download_image", "fetch_url", "fetch_image", "ImageFormat"]
+__all__ = ["download_image", "fetch_url"]
 
 
 ssl_context = ssl.create_default_context(cafile=certifi.where())
@@ -81,29 +81,6 @@ def _guess_image_format(content_type: str | None) -> ImageFormat:
         raise ValueError(f"unrecognised image format: {content_type}")
 
 
-def fetch_image(
-    url: str,
-    *,
-    params: dict[str, str] | None = None,
-    headers: dict[str, str] | None = None,
-) -> tuple[bytes, ImageFormat]:
-    """
-    Fetch an image from the given URL and return the image data and
-    image format.
-    """
-    ssl_context = ssl.create_default_context(cafile=certifi.where())
-
-    req = _build_request(url, params, headers)
-
-    with urllib.request.urlopen(req, context=ssl_context) as resp:
-        img_data = resp.read()
-        assert isinstance(img_data, bytes), type(img_data)
-
-    img_format = _guess_image_format(content_type=resp.headers["content-type"])
-
-    return img_data, img_format
-
-
 def download_image(
     url: str,
     out_prefix: Path,
@@ -119,12 +96,21 @@ def download_image(
 
     Throws a FileExistsError if you try to overwrite an existing file.
     """
-    im_data, im_format = fetch_image(url, params=params, headers=headers)
-    out_path = out_prefix.with_suffix("." + im_format)
+    ssl_context = ssl.create_default_context(cafile=certifi.where())
+
+    req = _build_request(url, params, headers)
+
+    with urllib.request.urlopen(req, context=ssl_context) as resp:
+        img_data = resp.read()
+        assert isinstance(img_data, bytes), type(img_data)
+
+    img_format = _guess_image_format(content_type=resp.headers["content-type"])
+
+    out_path = out_prefix.with_suffix("." + img_format)
 
     out_path.parent.mkdir(exist_ok=True, parents=True)
 
     with open(out_path, "xb") as out_file:
-        out_file.write(im_data)
+        out_file.write(img_data)
 
     return out_path

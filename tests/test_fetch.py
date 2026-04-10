@@ -3,18 +3,16 @@ Tests for `chives.fetch`.
 """
 
 import filecmp
-from io import BytesIO
 import json
 from pathlib import Path
 from typing import Any
 from urllib.error import HTTPError
 
-from PIL import Image
 import pytest
 import vcr
 from vcr.cassette import Cassette
 
-from chives.fetch import download_image, fetch_image, fetch_url
+from chives.fetch import download_image, fetch_url
 
 
 class TestFetchUrl:
@@ -68,56 +66,6 @@ class TestFetchUrl:
         assert headers["X-Author"] == "alexwlchan"
 
 
-class TestFetchImage:
-    """
-    Tests for `fetch_image`.
-    """
-
-    def test_http_200(self, vcr_cassette: Cassette) -> None:
-        """
-        Fetch an image and check we get the correct format.
-        """
-        url = "https://api.tumblr.com/v2/blog/thecroissantgirl.tumblr.com/avatar"
-
-        img_data, img_format = fetch_image(url)
-        assert img_format == "png"
-
-        im = Image.open(BytesIO(img_data))
-        assert im.format == "PNG"
-
-    def test_non_image(self, vcr_cassette: Cassette) -> None:
-        """
-        Fetching an "image" which has a non-image Content-Type header
-        throws an error.
-        """
-        url = "http://httpbin.org/status/200"
-
-        with pytest.raises(ValueError, match="unrecognised image format"):
-            fetch_image(url)
-
-    def test_no_content_type_header(self, cassette_name: str) -> None:
-        """
-        Fetching a URL which doesn't return a Content-Type header
-        throws an error.
-        """
-        url = "http://httpbin.org/status/200"
-
-        def delete_content_type_header(response: Any) -> Any:
-            response["headers"]["Content-Type"] = []
-            return response
-
-        with vcr.use_cassette(
-            cassette_name,
-            cassette_library_dir="tests/fixtures/cassettes",
-            decode_compressed_response=True,
-            before_record_response=delete_content_type_header,
-        ):
-            with pytest.raises(
-                RuntimeError, match="no Content-Type header in response"
-            ):
-                fetch_image(url)
-
-
 class TestDownloadImage:
     """
     Tests for `download_image`.
@@ -167,3 +115,35 @@ class TestDownloadImage:
 
         # The file contents are the same as the first download.
         assert filecmp.cmp(out_path, "tests/fixtures/media/470906.png", shallow=False)
+
+    def test_non_image(self, vcr_cassette: Cassette) -> None:
+        """
+        Fetching an "image" which has a non-image Content-Type header
+        throws an error.
+        """
+        url = "http://httpbin.org/status/200"
+
+        with pytest.raises(ValueError, match="unrecognised image format"):
+            download_image(url, out_prefix=Path("example"))
+
+    def test_no_content_type_header(self, cassette_name: str) -> None:
+        """
+        Fetching a URL which doesn't return a Content-Type header
+        throws an error.
+        """
+        url = "http://httpbin.org/status/200"
+
+        def delete_content_type_header(response: Any) -> Any:
+            response["headers"]["Content-Type"] = []
+            return response
+
+        with vcr.use_cassette(
+            cassette_name,
+            cassette_library_dir="tests/fixtures/cassettes",
+            decode_compressed_response=True,
+            before_record_response=delete_content_type_header,
+        ):
+            with pytest.raises(
+                RuntimeError, match="no Content-Type header in response"
+            ):
+                download_image(url, out_prefix=Path("example"))

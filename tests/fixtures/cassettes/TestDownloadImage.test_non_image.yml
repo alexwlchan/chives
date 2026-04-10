@@ -7,7 +7,7 @@ interactions:
       Host:
       - httpbin.org
       User-Agent:
-      - Python-urllib/3.14
+      - Python-urllib/3.13
     method: GET
     uri: http://httpbin.org/status/200
   response:
@@ -22,8 +22,10 @@ interactions:
       - close
       Content-Length:
       - '0'
+      Content-Type:
+      - text/html; charset=utf-8
       Date:
-      - Mon, 30 Mar 2026 05:20:46 GMT
+      - Fri, 10 Apr 2026 21:39:22 GMT
       Server:
       - gunicorn/19.9.0
     status:

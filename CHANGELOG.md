@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v33 - 2026-04-10
+
+Remove the `fetch_image` function from `chives.fetch`; either use `fetch_url` or `download_image`.
+
 ## v32 - 2026-04-01
 
 Add a `download_image` function to `chives.fetch`.
