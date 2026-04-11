@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v34 - 2026-04-11
+
+Improve the URL-handling in `chives.fetch`; in particular improve the case where you call `fetch_url(url, params)` with a URL that already has some query parameters or a fragment.
+
 ## v33 - 2026-04-10
 
 Remove the `fetch_image` function from `chives.fetch`; either use `fetch_url` or `download_image`.

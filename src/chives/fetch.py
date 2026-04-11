@@ -11,21 +11,30 @@ import urllib.request
 import certifi
 
 
-__all__ = ["download_image", "fetch_url"]
+__all__ = ["build_request", "download_image", "fetch_url"]
 
 
 ssl_context = ssl.create_default_context(cafile=certifi.where())
 
+QueryParams = dict[str, str] | list[tuple[str, str]]
+Headers = dict[str, str]
 
-def _build_request(
-    url: str, params: dict[str, str] | None, headers: dict[str, str] | None
+
+def build_request(
+    url: str, *, params: QueryParams | None = None, headers: Headers | None = None
 ) -> urllib.request.Request:
     """
     Build a request based on the given inputs.
     """
-    if params:
-        params_str = urllib.parse.urlencode(params)
-        url = url + "?" + params_str
+    if isinstance(params, dict):
+        params = [(k, v) for k, v in params.items()]
+    if params is not None:
+        u = urllib.parse.urlsplit(url)
+        query = urllib.parse.parse_qsl(u.query) + params
+        new_query = urllib.parse.urlencode(query)
+        url = urllib.parse.urlunsplit(
+            (u.scheme, u.netloc, u.path, new_query, u.fragment)
+        )
 
     req = urllib.request.Request(url)
 
@@ -37,16 +46,13 @@ def _build_request(
 
 
 def fetch_url(
-    url: str,
-    *,
-    params: dict[str, str] | None = None,
-    headers: dict[str, str] | None = None,
+    url: str, *, params: QueryParams | None = None, headers: Headers | None = None
 ) -> bytes:
     """
     Fetch the contents of the given URL and return the body of
     the response.
     """
-    req = _build_request(url, params, headers)
+    req = build_request(url, params=params, headers=headers)
 
     with urllib.request.urlopen(req, context=ssl_context) as resp:
         data = resp.read()
@@ -85,8 +91,8 @@ def download_image(
     url: str,
     out_prefix: Path,
     *,
-    params: dict[str, str] | None = None,
-    headers: dict[str, str] | None = None,
+    params: QueryParams | None = None,
+    headers: Headers | None = None,
 ) -> Path:
     """
     Download an image from the given URL to the target path, and return
@@ -98,7 +104,7 @@ def download_image(
     """
     ssl_context = ssl.create_default_context(cafile=certifi.where())
 
-    req = _build_request(url, params, headers)
+    req = build_request(url, params=params, headers=headers)
 
     with urllib.request.urlopen(req, context=ssl_context) as resp:
         img_data = resp.read()

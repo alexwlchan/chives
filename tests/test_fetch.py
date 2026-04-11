@@ -12,7 +12,51 @@ import pytest
 import vcr
 from vcr.cassette import Cassette
 
-from chives.fetch import download_image, fetch_url
+from chives.fetch import build_request, download_image, fetch_url, QueryParams
+
+
+@pytest.mark.parametrize(
+    "url, params, expected_url",
+    [
+        ("https://example.com", None, "https://example.com"),
+        (
+            "https://example.com",
+            {"one": "1", "two": "2"},
+            "https://example.com?one=1&two=2",
+        ),
+        (
+            "https://example.com",
+            [("one", "1"), ("two", "2")],
+            "https://example.com?one=1&two=2",
+        ),
+        (
+            "https://example.com",
+            [("num", "1"), ("num", "2")],
+            "https://example.com?num=1&num=2",
+        ),
+        (
+            "https://example.com#fragment",
+            [("num", "1"), ("num", "2")],
+            "https://example.com?num=1&num=2#fragment",
+        ),
+        (
+            "https://example.com?existing=1",
+            [("num", "1"), ("num", "2")],
+            "https://example.com?existing=1&num=1&num=2",
+        ),
+        (
+            "https://example.com?existing=1#fragment",
+            [("num", "1"), ("num", "2")],
+            "https://example.com?existing=1&num=1&num=2#fragment",
+        ),
+    ],
+)
+def test_build_request(url: str, params: QueryParams | None, expected_url: str) -> None:
+    """
+    Tests for `build_request`.
+    """
+    req = build_request(url, params=params)
+    assert req.full_url == expected_url
 
 
 class TestFetchUrl:
