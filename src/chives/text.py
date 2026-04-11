@@ -12,12 +12,12 @@ def smartify(text: str) -> str:
     """
     Add curly quotes and smart dashes to a string.
     """
-    # Undo some escaping from Mistune.
-    text = text.replace("&quot;", '"')
-
     attrs = (
         # normal quotes (" and ') to curly ones
         smartypants.Attr.q
+        |
+        # quote entities (&quot;) to curly quotes
+        smartypants.Attr.w
         |
         # typewriter dashes (--) to en-dashes and dashes (---) to em-dashes
         smartypants.Attr.D
