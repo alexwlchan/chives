@@ -1,6 +1,5 @@
 -e file:.[fetch,media,static_site_tests,text,urls]
 
-keyring
 mypy
 pytest-cov
 pytest-vcr
