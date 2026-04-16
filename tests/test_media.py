@@ -17,7 +17,7 @@ from chives.media import (
 @pytest.fixture
 def fixtures_dir() -> Path:
     """
-    Returns the directory where media fixtures are stored.
+    Return the directory where media fixtures are stored.
     """
     return Path("tests/fixtures/media")
 

@@ -13,7 +13,7 @@ from typing import Any
 
 def now() -> str:
     """
-    Returns the current time in the standard format used by my static sites.
+    Return the current time in the standard format used by my static sites.
     """
     return (
         datetime.now(tz=timezone.utc)
@@ -53,7 +53,7 @@ def find_all_dates(json_value: Any) -> Iterator[tuple[dict[str, Any], str, str]]
 
 def date_matches_format(date_string: str, format: str) -> bool:
     """
-    Returns True if `date_string` can be parsed as a datetime
+    Return True if `date_string` can be parsed as a datetime
     using `format`, False otherwise.
     """
     try:
@@ -65,7 +65,7 @@ def date_matches_format(date_string: str, format: str) -> bool:
 
 def date_matches_any_format(date_string: str, formats: Iterable[str]) -> bool:
     """
-    Returns True if `date_string` can be parsed as a datetime
+    Return True if `date_string` can be parsed as a datetime
     with any of the `formats`, False otherwise.
     """
     return any(date_matches_format(date_string, fmt) for fmt in formats)

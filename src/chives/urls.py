@@ -171,7 +171,7 @@ def parse_tumblr_post_url(url: str) -> tuple[str, str]:
 
 def is_url_safe(path: str | Path) -> bool:
     """
-    Returns True if a path is safe to use in a URL, False otherwise.
+    Return True if a path is safe to use in a URL, False otherwise.
     """
     p = str(path)
     return not ("?" in p or "#" in p or "%" in p)

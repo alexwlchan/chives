@@ -37,7 +37,7 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
 
 class StaticSiteTestSuite[M](ABC):
     """
-    Defines a base set of tests to run against any of my static sites.
+    Define a base set of tests to run against any of my static sites.
 
     This should be subclassed as a Test* class, which allows you to use
     the fixtures and write site-specific tests.
@@ -47,7 +47,7 @@ class StaticSiteTestSuite[M](ABC):
     @abstractmethod
     def get_site_root(cls) -> Path:
         """
-        Returns the path to the folder at the root of the site.
+        Return the path to the folder at the root of the site.
         """
         ...
 
@@ -55,27 +55,27 @@ class StaticSiteTestSuite[M](ABC):
     @pytest.fixture
     def metadata(self, site_root: Path) -> M:
         """
-        Returns all the metadata for this project.
+        Return all the metadata for this project.
         """
         ...
 
     @abstractmethod
     def list_paths_in_metadata(self, metadata: M) -> set[Path]:
         """
-        Returns a set of paths described in the metadata.
+        Return a set of paths described in the metadata.
         """
         ...
 
     @pytest.fixture
     def site_root(self) -> Path:
         """
-        Returns the path to the folder at the root of the site.
+        Return the path to the folder at the root of the site.
         """
         return self.get_site_root()
 
     def list_tags_in_metadata(self, metadata: M) -> Iterator[str]:  # pragma: no cover
         """
-        Returns all the tags used in the metadata, once for every usage.
+        Return all the tags used in the metadata, once for every usage.
 
         For example, if three documents use the same tag, the tag will
         be returned three times.
@@ -99,7 +99,7 @@ class StaticSiteTestSuite[M](ABC):
 
     def list_paths_saved_locally(self, site_root: Path) -> set[Path]:
         """
-        Returns a set of paths saved locally.
+        Return a set of paths saved locally.
         """
         paths_saved_locally = set()
 

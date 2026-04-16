@@ -24,7 +24,7 @@ __all__ = ["cassette_name", "vcr_cassette"]
 
 def get_cassette_name(request: pytest.FixtureRequest) -> str:
     """
-    Returns the name of a cassette for vcr.py.
+    Return the name of a cassette for vcr.py.
 
     The name can be made up of (up to) three parts:
 
@@ -53,7 +53,7 @@ def get_cassette_name(request: pytest.FixtureRequest) -> str:
 @pytest.fixture
 def cassette_name(request: pytest.FixtureRequest) -> str:
     """
-    Returns the filename of a VCR cassette to use in tests.
+    Return the filename of a VCR cassette to use in tests.
 
     This is useful when you need some custom vcr.py options, and
     can't use the prebuilt `vcr_cassette` fixture.
@@ -64,7 +64,7 @@ def cassette_name(request: pytest.FixtureRequest) -> str:
 @pytest.fixture
 def vcr_cassette(cassette_name: str) -> Iterator[Cassette]:
     """
-    Creates a VCR cassette for use in tests.
+    Create a VCR cassette for use in tests.
 
     Tests will record their HTTP interactions as "cassettes" using vcr.py,
     which can be replayed offline (e.g. in CI tests).
