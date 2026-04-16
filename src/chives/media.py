@@ -38,7 +38,7 @@ __all__ = [
 
 def is_av1_video(path: str | Path) -> bool:
     """
-    Returns True if a video is encoded with AV1, False otherwise.
+    Return True if a video is encoded with AV1, False otherwise.
     """
     # fmt: off
     cmd = [
@@ -146,7 +146,7 @@ MediaEntity = ImageEntity | VideoEntity
 
 def get_media_paths(e: MediaEntity) -> set[Path]:
     """
-    Returns a list of all media paths represented by this media entity.
+    Return a list of all media paths represented by this media entity.
     """
     result: set[str | Path] = set()
 
@@ -276,14 +276,14 @@ def create_video_entity(
 
 def _is_animated(im: "PIL.Image.Image") -> bool:
     """
-    Returns True if an image is animated, False otherwise.
+    Return True if an image is animated, False otherwise.
     """
     return getattr(im, "is_animated", False)
 
 
 def _has_transparency(im: "PIL.Image.Image") -> bool:
     """
-    Returns True if an image has transparent pixels, False otherwise.
+    Return True if an image has transparent pixels, False otherwise.
 
     By Vinyl Da.i'gyu-Kazotetsu on Stack Overflow:
     https://stackoverflow.com/a/58567453
@@ -345,7 +345,7 @@ def _create_thumbnail(path: str | Path, thumbnail_config: ThumbnailConfig) -> st
 
 def _get_video_data(video_path: str | Path) -> tuple[int, int, str]:
     """
-    Returns the dimensions and duration of a video, as a width/height fraction.
+    Return the dimensions and duration of a video, as a width/height fraction.
     """
     cmd = [
         "ffprobe",
