@@ -58,4 +58,6 @@ strict = true
 
 [tool.ruff.lint]
 select = ["D", "E", "F"]
-ignore = ["D200", "D203", "D204", "D205", "D212"]
+ignore = ["D200", "D203", "D204", "D205",
+    "D212",  # multi-line-summary-first-line
+]
