@@ -173,6 +173,10 @@ class TestIsMastodonHost:
             # PeerTube exposes /.well-known/nodeinfo, but it's running
             # different software.
             "peertube.tv",
+            #
+            # A website with a known bad SSL certificate, which is assumed
+            # not to be a Mastodon host because we can't connect to it.
+            "expired.badssl.com",
         ],
     )
     def test_non_mastodon_servers(self, host: str, vcr_cassette: Cassette) -> None:
