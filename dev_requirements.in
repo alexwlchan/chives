@@ -1,6 +1,0 @@
--e file:.[fetch,media,static_site_tests,text,urls]
-
-mypy
-pytest-cov
-pytest-vcr
-ruff
